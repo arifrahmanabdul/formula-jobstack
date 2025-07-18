@@ -1,0 +1,22 @@
+{# {% extends "layouts/main.twig" %}
+
+{% block content %} #}
+<h2>Tambah Skill untuk: {{ job.title }}</h2>
+
+<form method="POST" action="/recruiter/job-skills">
+    <input type="hidden" name="id_job" value="{{ job.id }}">
+
+    <div class="mb-3">
+        <label for="id_skill" class="form-label">Pilih Skill</label>
+        <select name="id_skill" id="id_skill" class="form-select" required>
+            <option value="">-- Pilih --</option>
+            {% for skill in skills %}
+                <option value="{{ skill.id }}">{{ skill.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Simpan</button>
+    <a href="/recruiter/job-skills/{{ job.id }}" class="btn btn-secondary">Batal</a>
+</form>
+{# {% endblock %} #}

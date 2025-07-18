@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Lokasi - Admin Panel</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/admin2.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="header-left">
+                <h1><i class="fas fa-plus-circle"></i> Tambah Lokasi</h1>
+                <p>Tambahkan data lokasi (kota, provinsi, negara) ke dalam sistem</p>
+            </div>
+            <div class="header-right">
+                <a href="/admin/locations" class="logout-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Kembali ke Daftar Lokasi</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="admin-layout">
+            <!-- Sidebar -->
+            <div class="nav-card">
+                <div class="nav-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Admin Panel</h2>
+                    <p>Navigasi sistem administrasi</p>
+                </div>
+
+                <div class="nav-content">
+                    <!-- Dashboard -->
+                    <div class="nav-section">
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/dashboard/admin" class="nav-link">
+                                    <i class="fas fa-home"></i> Dashboard
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Master Data -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Master Data</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/skills" class="nav-link">
+                                    <i class="fas fa-cogs"></i> Skills
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/industries" class="nav-link">
+                                    <i class="fas fa-industry"></i> Industri
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/job-categories" class="nav-link">
+                                    <i class="fas fa-tags"></i> Kategori Pekerjaan
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/locations" class="nav-link active">
+                                    <i class="fas fa-map-marker-alt"></i> Lokasi
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Data Inti -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Data Inti</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/companies" class="nav-link">
+                                    <i class="fas fa-building"></i> Perusahaan
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/jobs" class="nav-link">
+                                    <i class="fas fa-briefcase"></i> Lowongan
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Lamaran & Relasi -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Lamaran & Relasi</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/applications" class="nav-link">
+                                    <i class="fas fa-file-alt"></i> Lamaran
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/application-notes" class="nav-link">
+                                    <i class="fas fa-sticky-note"></i> Catatan Lamaran
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-skills" class="nav-link">
+                                    <i class="fas fa-user-cog"></i> Skill Pelamar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-experiences" class="nav-link">
+                                    <i class="fas fa-briefcase"></i> Pengalaman Pelamar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-educations" class="nav-link">
+                                    <i class="fas fa-graduation-cap"></i> Pendidikan Pelamar
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="content-card">
+                <div class="content-header">
+                    <h2 class="content-title">
+                        <i class="fas fa-plus-circle"></i> Form Tambah Lokasi
+                    </h2>
+                </div>
+                <div class="content-body">
+                    <div class="form-container">
+                        <form method="POST" action="/admin/locations">
+                            <div class="form-group">
+                                <label for="city">Kota <span class="required">*</span></label>
+                                <input type="text" id="city" name="city" class="form-control" required maxlength="100"
+                                       placeholder="Contoh: Yogyakarta" value="{{ old.city ?? '' }}">
+                                {% if errors.city %}
+                                    <span class="error-message">{{ errors.city }}</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="province">Provinsi <span class="required">*</span></label>
+                                <input type="text" id="province" name="province" class="form-control" required maxlength="100"
+                                       placeholder="Contoh: DI Yogyakarta" value="{{ old.province ?? '' }}">
+                                {% if errors.province %}
+                                    <span class="error-message">{{ errors.province }}</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="country">Negara <span class="required">*</span></label>
+                                <input type="text" id="country" name="country" class="form-control" required maxlength="100"
+                                       placeholder="Contoh: Indonesia" value="{{ old.country ?? '' }}">
+                                {% if errors.country %}
+                                    <span class="error-message">{{ errors.country }}</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-actions">
+                                <a href="/admin/locations" class="btn btn-secondary">
+                                    <i class="fas fa-times"></i> Batal
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Simpan Lokasi
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/js/admin2.js"></script>
+</body>
+</html>

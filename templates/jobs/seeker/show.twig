@@ -1,0 +1,20 @@
+<h2>{{ job.title }}</h2>
+<p><strong>Perusahaan:</strong> {{ job.company_name }}</p>
+<p><strong>Kota:</strong> {{ job.location_name }}</p>
+<p><strong>Kategori:</strong> {{ job.category_name }}</p>
+<p><strong>Gaji:</strong> Rp{{ job.salary_min }} - Rp{{ job.salary_max }}</p>
+<p><strong>Jenis:</strong> {{ job.job_type }}</p>
+<p><strong>Deskripsi:</strong> {{ job.description }}</p>
+<p><strong>Persyaratan:</strong> {{ job.requirements }}</p>
+  {% if job.logo_url %}
+        <img src="/uploads/logos/{{ job.logo_url }}" width="80" alt="Logo">
+    {% else %}
+        <em>Tidak ada logo</em>
+    {% endif %}
+<form method="POST" action="/seeker/apply/{{ job.id }}">
+<div class="mb-3">
+        <label for="cover_letter">Upload Surat Lamaran (PDF)</label>
+        <input type="file" name="cover_letter" accept="application/pdf" required class="form-control">
+    </div>
+    <button class="btn btn-success">Lamar Pekerjaan</button>
+</form>

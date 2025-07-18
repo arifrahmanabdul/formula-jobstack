@@ -1,0 +1,223 @@
+{% extends "layout/base.twig" %}
+
+{% block title %}Find Job - Jobstack{% endblock %}
+
+{% block content %}
+<div class="find-job-page">
+    <!-- Header Section -->
+    <div class="find-job-header">
+        <div class="container">
+            <h1 class="find-job-title">Find Job</h1>
+
+            <!-- Search Form -->
+            <div class="find-job-search">
+                <form class="search-form" method="GET" action="/find-job">
+                    <div class="search-input-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" name="keyword" placeholder="Job title, keyword..." 
+                               value="{{ currentFilters.keyword }}" class="search-input">
+                    </div>
+                    
+                    <div class="search-input-wrapper">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" name="location" placeholder="Location" 
+                               value="{{ currentFilters.location }}" class="search-input">
+                    </div>
+                    
+                    <div class="search-input-wrapper">
+                        <i class="fas fa-briefcase"></i>
+                        <select name="category" class="search-input">
+                            <option value="">Select Category</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}" 
+                                        {% if currentFilters.category == category.id %}selected{% endif %}>
+                                    {{ category.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="search-input-wrapper">
+                        <i class="fas fa-clock"></i>
+                        <select name="job_type" class="search-input">
+                            <option value="">Job Type</option>
+                            <option value="Full-time" {% if currentFilters.job_type == 'Full-time' %}selected{% endif %}>Full-time</option>
+                            <option value="Part-time" {% if currentFilters.job_type == 'Part-time' %}selected{% endif %}>Part-time</option>
+                            <option value="Contract" {% if currentFilters.job_type == 'Contract' %}selected{% endif %}>Contract</option>
+                            <option value="Internship" {% if currentFilters.job_type == 'Internship' %}selected{% endif %}>Internship</option>
+                            <option value="Remote" {% if currentFilters.job_type == 'Remote' %}selected{% endif %}>Remote</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary search-btn">
+                        Find Job
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters and Results -->
+    <div class="container">
+        <div class="filters-section">
+            <div class="filters-row">
+                <!-- Active Filters -->
+                <div class="active-filters">
+                    {% if activeFilters|length > 0 %}
+                        {% for filter in activeFilters %}
+                            <span class="filter-tag" data-filter="{{ filter.type }}" data-value="{{ filter.value }}">
+                                {{ filter.label }}
+                                <span class="remove">&times;</span>
+                            </span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                
+                <!-- Results Controls -->
+                <div class="results-controls">
+                    <select class="sort-dropdown" name="sort" onchange="updateSort(this.value)">
+                        <option value="latest" {% if currentFilters.sort == 'latest' %}selected{% endif %}>Latest</option>
+                        <option value="salary_high" {% if currentFilters.sort == 'salary_high' %}selected{% endif %}>Salary High to Low</option>
+                        <option value="salary_low" {% if currentFilters.sort == 'salary_low' %}selected{% endif %}>Salary Low to High</option>
+                        <option value="company" {% if currentFilters.sort == 'company' %}selected{% endif %}>Company A-Z</option>
+                    </select>
+                    
+                    <span class="results-count">{{ pagination.total_jobs }} jobs found</span>
+                    
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="view-btn" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jobs Grid -->
+        <div class="jobs-container" style="margin-bottom: 80px;">
+            {% if jobs|length > 0 %}
+                <div class="jobs-grid">
+                    {% for job in jobs %}
+                        <div class="job-card-modern {% if job.featured %}job-featured{% endif %}" data-job-id="{{ job.id }}">
+                            <div class="job-card-header">
+                                <div class="company-logo-wrapper">
+                                    <img src="{{ job.company_logo_url }}" alt="{{ job.company_name }}" class="company-logo-modern">
+                                </div>
+                                <div class="job-badges">
+                                    {% if job.featured %}
+                                        <span class="job-badge badge-featured">Featured</span>
+                                    {% endif %}
+                                    <span class="job-badge badge-{{ job.job_type|lower|replace({' ': '', '-': ''}) }}">{{ job.job_type }}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="job-info">
+                                <h3 class="job-title">
+                                    <a href="/find-job/{{ job.id }}">{{ job.title }}</a>
+                                </h3>
+                                <p class="company-name">{{ job.company_name }}</p>
+                            </div>
+                            
+                            <div class="job-meta-modern">
+                                <span class="job-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    {{ job.location_name }}
+                                </span>
+                                <span class="job-type">
+                                    {{ job.job_type }}
+                                </span>
+                                <span class="job-salary">
+                                    {{ job.salary_formatted }}
+                                </span>
+                            </div>
+                            
+                            <div class="job-card-footer">
+                                <span class="job-posted">{{ job.posted_ago }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if pagination.total_pages > 1 %}
+                    <div class="pagination-wrapper">
+                        <div class="pagination">
+                            {% if pagination.has_prev %}
+                                <a href="?page={{ pagination.prev_page }}" class="page-btn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            {% endif %}
+                            
+                            {% for page in 1..pagination.total_pages %}
+                                {% if page == pagination.current_page %}
+                                    <span class="page-btn active">{{ page }}</span>
+                                {% elseif page <= 3 or page > pagination.total_pages - 3 or (page >= pagination.current_page - 1 and page <= pagination.current_page + 1) %}
+                                    <a href="?page={{ page }}" class="page-btn">{{ page }}</a>
+                                {% elseif page == 4 or page == pagination.total_pages - 3 %}
+                                    <span class="page-btn disabled">...</span>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {% if pagination.has_next %}
+                                <a href="?page={{ pagination.next_page }}" class="page-btn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% else %}
+                <!-- No Jobs Found -->
+                <div class="no-jobs-found">
+                    <div class="no-jobs-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>No jobs found</h3>
+                    <p>Try adjusting your search criteria or browse all available positions.</p>
+                    <a href="/find-job" class="btn btn-primary">Browse All Jobs</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Search form submission
+    const searchForm = document.querySelector('.search-form');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+                submitBtn.disabled = true;
+            }
+        });
+    }
+    
+    // Filter tags removal
+    document.querySelectorAll('.filter-tag .remove').forEach(function(removeBtn) {
+        removeBtn.addEventListener('click', function() {
+            const filterTag = this.parentElement;
+            const filterType = filterTag.dataset.filter;
+            
+            // Create new URL without this filter
+            const url = new URL(window.location);
+            url.searchParams.delete(filterType);
+            window.location.href = url.toString();
+        });
+    });
+});
+
+function updateSort(sortValue) {
+    const url = new URL(window.location);
+    url.searchParams.set('sort', sortValue);
+    window.location.href = url.toString();
+}
+</script>
+{% endblock %}

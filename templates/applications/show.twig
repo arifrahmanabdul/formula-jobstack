@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Lamaran - {{ application.user_name }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin2.css">
+    <style>
+        .profile-card { margin-bottom: 1.5rem; }
+        .profile-section { margin-bottom: 1.5rem; }
+        .profile-section-title { font-size: 1.1rem; font-weight: 600; color: var(--gray-800); border-bottom: 2px solid var(--primary-light); padding-bottom: 0.5rem; margin-bottom: 1rem; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+        .info-item { display: flex; flex-direction: column; }
+        .info-item label { font-size: 0.8rem; color: var(--gray-500); margin-bottom: 0.25rem; }
+        .info-item span { font-weight: 500; }
+        .timeline-item { position: relative; padding-left: 25px; border-left: 2px solid var(--gray-200); margin-bottom: 1.5rem; }
+        .timeline-item::before { content: ''; width: 12px; height: 12px; background: var(--primary-color); border-radius: 50%; position: absolute; left: -7px; top: 5px; }
+        .timeline-item:last-child { border-left: 2px solid transparent; }
+        .skill-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .skill-badge { background-color: var(--primary-light); color: var(--primary-dark); padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+<div class="admin-container">
+    <div class="admin-header">
+        <div class="header-left">
+            <h1><i class="fas fa-user-tie"></i> Detail Lamaran</h1>
+            <p>Rincian lamaran dari <strong>{{ application.user_name }}</strong> untuk posisi <strong>{{ application.job_title }}</strong></p>
+        </div>
+        <div class="header-right">
+            <a href="/admin/applications" class="logout-btn"><i class="fas fa-arrow-left"></i> Kembali</a>
+        </div>
+    </div>
+    <div class="admin-layout">
+        <div class="nav-card">
+      <div class="nav-header">
+        <h2><i class="fas fa-tachometer-alt"></i> Admin Panel</h2>
+        <p>Navigasi sistem administrasi</p>
+      </div>
+
+      <div class="nav-content">
+        <!-- Dashboard -->
+        <div class="nav-section">
+          <ul class="nav-menu">
+            <li class="nav-item">
+              <a href="/dashboard/admin" class="nav-link">
+                <i class="fas fa-home"></i> Dashboard
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Master Data -->
+        <div class="nav-section">
+          <div class="nav-section-title">Master Data</div>
+          <ul class="nav-menu">
+            <li class="nav-item"><a href="/admin/skills" class="nav-link"><i class="fas fa-cogs"></i> Skills</a></li>
+            <li class="nav-item"><a href="/admin/industries" class="nav-link"><i class="fas fa-industry"></i> Industri</a></li>
+            <li class="nav-item"><a href="/admin/job-categories" class="nav-link"><i class="fas fa-tags"></i> Kategori Pekerjaan</a></li>
+            <li class="nav-item"><a href="/admin/locations" class="nav-link"><i class="fas fa-map-marker-alt"></i> Lokasi</a></li>
+          </ul>
+        </div>
+
+        <!-- Data Inti -->
+        <div class="nav-section">
+          <div class="nav-section-title">Data Inti</div>
+          <ul class="nav-menu">
+            <li class="nav-item"><a href="/admin/companies" class="nav-link"><i class="fas fa-building"></i> Perusahaan</a></li>
+            <li class="nav-item"><a href="/admin/jobs" class="nav-link"><i class="fas fa-briefcase"></i> Lowongan</a></li>
+          </ul>
+        </div>
+
+        <!-- Lamaran & Relasi -->
+        <div class="nav-section">
+          <div class="nav-section-title">Lamaran & Relasi</div>
+          <ul class="nav-menu">
+            <li class="nav-item"><a href="/admin/applications" class="nav-link active"><i class="fas fa-file-alt"></i> Lamaran</a></li>
+            <li class="nav-item"><a href="/admin/application-notes" class="nav-link"><i class="fas fa-sticky-note"></i> Catatan Lamaran</a></li>
+            <li class="nav-item"><a href="/admin/user-skills" class="nav-link"><i class="fas fa-user-cog"></i> Skill Pelamar</a></li>
+            <li class="nav-item"><a href="/admin/user-experiences" class="nav-link"><i class="fas fa-briefcase"></i> Pengalaman Pelamar</a></li>
+            <li class="nav-item"><a href="/admin/user-educations" class="nav-link"><i class="fas fa-graduation-cap"></i> Pendidikan Pelamar</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+        <div class="content-card">
+            <div class="content-body">
+                <!-- Detail Lamaran -->
+                <div class="profile-card">
+                    <div class="profile-section">
+                        <h3 class="profile-section-title">Informasi Lamaran</h3>
+                        <div class="info-grid">
+                            <div class="info-item"><label>Nama Pelamar</label><span>{{ application.user_name }}</span></div>
+                            <div class="info-item"><label>Email</label><span>{{ application.user_email }}</span></div>
+                            <div class="info-item"><label>Telepon</label><span>{{ application.user_phone ?: '-' }}</span></div>
+                            <div class="info-item"><label>Posisi Dilamar</label><span>{{ application.job_title }}</span></div>
+                            <div class="info-item"><label>Perusahaan</label><span>{{ application.company_name }}</span></div>
+                            <div class="info-item"><label>Tanggal Lamar</label><span>{{ application.application_date | date("d F Y H:i") }}</span></div>
+                            <div class="info-item"><label>Status</label><span><span class="badge badge-{{ application.status | lower | replace({'_': '-'}) }}">{{ application.status }}</span></span></div>
+                            <div class="info-item">
+                                <label>Surat Lamaran</label>
+                                {% if application.cover_letter %}
+                                    <a href="/uploads/cover_letters/{{ application.cover_letter }}" target="_blank" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Unduh</a>
+                                {% else %}
+                                    <span>-</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profil Pelamar -->
+                <div class="profile-card">
+                    <div class="profile-section">
+                        <h3 class="profile-section-title">Profil Pelamar</h3>
+                        
+                        <!-- Skills -->
+                        <h4><i class="fas fa-cogs"></i> Skills</h4>
+                        <div class="skill-list mb-4">
+                            {% for skill in skills %}
+                                <span class="skill-badge">{{ skill.name }}</span>
+                            {% else %}
+                                <p>Tidak ada data skill.</p>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Pengalaman Kerja -->
+                        <h4><i class="fas fa-briefcase"></i> Pengalaman Kerja</h4>
+                        <div class="timeline">
+                        {% for exp in experiences %}
+                            <div class="timeline-item">
+                                <h5>{{ exp.position }} di {{ exp.company_name }}</h5>
+                                <small class="text-muted">{{ exp.start_date | date("F Y") }} - {{ exp.end_date ? exp.end_date | date("F Y") : 'Sekarang' }}</small>
+                                <p>{{ exp.description | nl2br }}</p>
+                            </div>
+                        {% else %}
+                            <p>Tidak ada data pengalaman kerja.</p>
+                        {% endfor %}
+                        </div>
+
+                        <!-- Pendidikan -->
+                        <h4><i class="fas fa-graduation-cap"></i> Pendidikan</h4>
+                        <div class="timeline">
+                        {% for edu in educations %}
+                            <div class="timeline-item">
+                                <h5>{{ edu.degree }} {{ edu.field_of_study }}, {{ edu.institution }}</h5>
+                                <small class="text-muted">{{ edu.start_date | date("Y") }} - {{ edu.end_date | date("Y") }}</small>
+                                <p>IPK: {{ edu.gpa }}</p>
+                            </div>
+                        {% else %}
+                            <p>Tidak ada data pendidikan.</p>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

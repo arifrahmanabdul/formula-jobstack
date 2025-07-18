@@ -1,0 +1,46 @@
+<h2>Edit Job Alert</h2>
+
+<form action="/admin/job-alerts/update/{{ alert.id }}" method="post">
+    <div class="mb-3">
+        <label for="id_user">User</label>
+        <select name="id_user" id="id_user" class="form-control" required>
+            {% for user in users %}
+            <option value="{{ user.id }}" {{ user.id == alert.id_user ? 'selected' : '' }}>
+                {{ user.full_name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="keywords">Keyword</label>
+        <input type="text" name="keywords" id="keywords" class="form-control" value="{{ alert.keywords }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_location">Lokasi</label>
+        <select name="id_location" id="id_location" class="form-control">
+            <option value="">-- Opsional --</option>
+            {% for loc in locations %}
+            <option value="{{ loc.id }}" {{ loc.id == alert.id_location ? 'selected' : '' }}>
+                {{ loc.city }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_category">Kategori</label>
+        <select name="id_category" id="id_category" class="form-control">
+            <option value="">-- Opsional --</option>
+            {% for cat in categories %}
+            <option value="{{ cat.id }}" {{ cat.id == alert.id_category ? 'selected' : '' }}>
+                {{ cat.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a href="/admin/job-alerts" class="btn btn-secondary">Batal</a>
+</form>

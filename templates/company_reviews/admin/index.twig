@@ -1,0 +1,35 @@
+<h2>Daftar Review Perusahaan</h2>
+
+<a href="/admin/company-reviews/create" class="btn btn-primary mb-3">Tambah Review</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Perusahaan</th>
+            <th>Reviewer</th>
+            <th>Rating</th>
+            <th>Judul</th>
+            <th>Review</th>
+            <th>Tanggal</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for review in reviews %}
+            <tr>
+                <td>{{ review.company_name }}</td>
+                <td>{{ review.user_name }}</td>
+                <td>{{ review.rating }}</td>
+                <td>{{ review.title }}</td>
+                <td>{{ review.review_text }}</td>
+                <td>{{ review.created_at }}</td>
+                <td>
+                    <a href="/admin/company-reviews/edit/{{ review.id }}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="/admin/company-reviews/delete/{{ review.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus review ini?')">Hapus</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr><td colspan="7" class="text-center">Belum ada review.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -9,9 +9,15 @@ use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Medoo\Medoo;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
+        // Medoo binding
+        Medoo::class => function (ContainerInterface $c) {
+            $config = require __DIR__ . '/../src/config/database.php';
+            return new Medoo($config);
+        },
         LoggerInterface::class => function (ContainerInterface $c) {
             $settings = $c->get(SettingsInterface::class);
 

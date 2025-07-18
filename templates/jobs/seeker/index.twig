@@ -1,0 +1,36 @@
+<h2>Lowongan Pekerjaan</h2>
+<table class="table">
+	 <tr>
+            <th>Logo</th>
+			<th>Perusahaan</th>
+            <th>Lowongan</th>
+            <th>Jenis</th>
+            <th>Status</th>
+            <th>Gaji</th>
+            <th>Perusahaan</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for job in jobs %}
+        <tr>
+            <td>
+                 {% if job.company_logo %}
+                    <img src="/uploads/logos/{{ job.company_logo }}" width="60" alt="Logo">
+                {% else %}
+                    <em>Tidak ada</em>
+                {% endif %}
+            </td>
+			<td>{{ job.company_name }}</td>
+            <td>{{ job.title }}</td>
+            <td>{{ job.job_type }}</td>
+            <td>{{ job.status }}</td>
+            <td>{{ job.salary_min }} - {{ job.salary_max }}</td>
+            <td>{{ job.company_name }}</td>
+            <td>
+					<a href="/seeker/jobs/{{ job.id }}" class="btn btn-info btn-sm">Lihat</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>

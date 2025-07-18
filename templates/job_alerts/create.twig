@@ -1,0 +1,41 @@
+<h2>Tambah Job Alert</h2>
+
+<form action="/admin/job-alerts" method="post">
+    <div class="mb-3">
+        <label for="id_user">User</label>
+        <select name="id_user" id="id_user" class="form-control" required>
+            <option value="">-- Pilih User --</option>
+            {% for user in users %}
+            <option value="{{ user.id }}">{{ user.full_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="keywords">Keyword</label>
+        <input type="text" name="keywords" id="keywords" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_location">Lokasi</label>
+        <select name="id_location" id="id_location" class="form-control">
+            <option value="">-- Opsional --</option>
+            {% for loc in locations %}
+            <option value="{{ loc.id }}">{{ loc.city }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_category">Kategori</label>
+        <select name="id_category" id="id_category" class="form-control">
+            <option value="">-- Opsional --</option>
+            {% for cat in categories %}
+            <option value="{{ cat.id }}">{{ cat.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Simpan</button>
+    <a href="/admin/job-alerts" class="btn btn-secondary">Kembali</a>
+</form>

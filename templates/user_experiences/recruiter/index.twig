@@ -1,0 +1,29 @@
+<h2>Riwayat Pengalaman Kerja Pelamar</h2>
+<table border="1" cellpadding="6">
+  <thead>
+    <tr>
+      <th>Nama Pelamar</th>
+      <th>Jabatan</th>
+      <th>Perusahaan</th>
+      <th>Tanggal Mulai</th>
+      <th>Tanggal Selesai</th>
+      <th>Deskripsi</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for exp in experiences %}
+      <tr>
+        <td>{{ exp.full_name }}</td>
+        <td>{{ exp.job_title }}</td>
+        <td>{{ exp.company_name }}</td>
+        <td>{{ exp.start_date }}</td>
+        <td>{{ exp.end_date }}</td>
+        <td>{{ exp.description }}</td>
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="6">Belum ada riwayat pengalaman kerja dari pelamar.</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

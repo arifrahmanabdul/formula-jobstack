@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Skills - Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="header-left">
+                <h1><i class="fas fa-cogs"></i> Kelola Skills</h1>
+                <p>Kelola daftar keahlian yang tersedia dalam sistem</p>
+            </div>
+            <div class="header-right">
+                <a href="/dashboard/admin" class="logout-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Kembali ke Dashboard</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="admin-layout">
+            <!-- Navigation -->
+            <div class="nav-card">
+                <div class="nav-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Admin Panel</h2>
+                    <p>Navigasi sistem administrasi</p>
+                </div>
+                
+                <div class="nav-content">
+                    <!-- Dashboard -->
+                    <div class="nav-section">
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/dashboard/admin" class="nav-link active">
+                                    <i class="fas fa-home"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Master Data -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Master Data</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/skills" class="nav-link">
+                                    <i class="fas fa-cogs"></i>
+                                    Skills
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/industries" class="nav-link">
+                                    <i class="fas fa-industry"></i>
+                                    Industri
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/job-categories" class="nav-link">
+                                    <i class="fas fa-tags"></i>
+                                    Kategori Pekerjaan
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/locations" class="nav-link">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Lokasi
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Data Inti -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Data Inti</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/companies" class="nav-link">
+                                    <i class="fas fa-building"></i>
+                                    Perusahaan
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/jobs" class="nav-link">
+                                    <i class="fas fa-briefcase"></i>
+                                    Lowongan
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Lamaran & Relasi -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Lamaran & Relasi</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/applications" class="nav-link">
+                                    <i class="fas fa-file-alt"></i>
+                                    Lamaran
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/application-notes" class="nav-link">
+                                    <i class="fas fa-sticky-note"></i>
+                                    Catatan Lamaran
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-skills" class="nav-link">
+                                    <i class="fas fa-user-cog"></i>
+                                    Skill Pelamar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-experiences" class="nav-link">
+                                    <i class="fas fa-briefcase"></i>
+                                    Pengalaman Pelamar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-educations" class="nav-link">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    Pendidikan Pelamar
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="content-card">
+                <div class="content-header">
+                    <h2 class="content-title">
+                        <i class="fas fa-cogs"></i>
+                        Daftar Skills
+                    </h2>
+                </div>
+                <div class="content-body">
+                    <!-- Action Bar -->
+                    <div class="action-bar">
+                        <a href="/admin/skills/create" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Tambah Skill
+                        </a>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Cari skill...">
+                        </div>
+                    </div>
+
+                    <!-- Skills Table -->
+                    <div class="table-container">
+                        <table class="data-table" id="skillsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nama Skill</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="skillsTableBody">
+                                <!-- Data will be loaded via AJAX -->
+                            </tbody>
+                        </table>
+                        <!-- Pagination will be added here by JavaScript -->
+                    </div>
+
+                    <!-- Loading State -->
+                    <div id="loadingState" class="loading-container" style="display: none;">
+                        <div class="loading-spinner"></div>
+                        <p>Memuat data...</p>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="emptyState" class="empty-state" style="display: none;">
+                        <i class="fas fa-cogs"></i>
+                        <h3>Belum ada skill</h3>
+                        <p>Mulai dengan menambahkan skill pertama</p>
+                        <button class="btn btn-primary" onclick="openAddModal()">
+                            <i class="fas fa-plus"></i>
+                            Tambah Skill
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Konfirmasi Hapus</h3>
+                <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Apakah Anda yakin ingin menghapus skill "<span id="deleteSkillName"></span>"?</p>
+                <p class="warning-text">Data akan diarsipkan dan dapat dipulihkan jika diperlukan.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Batal</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                    <i class="fas fa-trash"></i>
+                    Hapus
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/admin.js"></script>
+    <script>
+        // Initialize Skills Management with pagination
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof SkillsManager !== 'undefined') {
+                window.skillsManager = new SkillsManager();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<h2>Edit Catatan</h2>
+
+<form method="POST" action="/recruiter/application-notes/update/{{ note.id }}">
+    <div>
+        <label>Jenis Catatan</label>
+        <select name="note_type" required>
+            <option value="internal" {% if note.note_type == 'internal' %}selected{% endif %}>Internal</option>
+            <option value="feedback" {% if note.note_type == 'feedback' %}selected{% endif %}>Feedback</option>
+        </select>
+    </div>
+    <div>
+        <label>Isi Catatan</label>
+        <textarea name="note_text" rows="4" required>{{ note.note_text }}</textarea>
+    </div>
+    <button type="submit">Update</button>
+</form>

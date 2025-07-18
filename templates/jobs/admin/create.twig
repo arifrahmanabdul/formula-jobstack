@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Lowongan - Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin2.css">
+</head>
+<body>
+<div class="admin-container">
+    <div class="admin-header">
+        <div class="header-left">
+            <h1><i class="fas fa-plus-circle"></i> Tambah Lowongan</h1>
+            <p>Tambahkan data lowongan kerja baru</p>
+        </div>
+        <div class="header-right">
+            <a href="/admin/jobs" class="logout-btn"><i class="fas fa-arrow-left"></i> Kembali</a>
+        </div>
+    </div>
+    <div class="admin-layout">
+        <div class="nav-card">
+            <!-- Sidebar Navigation Anda -->
+            <!-- Navigation Sidebar -->
+            <div class="nav-card">
+                <div class="nav-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Admin Panel</h2>
+                    <p>Navigasi sistem administrasi</p>
+                </div>
+                <div class="nav-content">
+                    <!-- Navigasi Anda -->
+                    <div class="nav-section">
+                        <ul class="nav-menu">
+                            <li class="nav-item"><a href="/dashboard/admin" class="nav-link"><i class="fas fa-home"></i> Dashboard</a></li>
+                        </ul>
+                    </div>
+                    <div class="nav-section">
+                        <div class="nav-section-title">Master Data</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item"><a href="/admin/skills" class="nav-link"><i class="fas fa-cogs"></i> Skills</a></li>
+                            <li class="nav-item"><a href="/admin/industries" class="nav-link"><i class="fas fa-industry"></i> Industri</a></li>
+                            <li class="nav-item"><a href="/admin/job-categories" class="nav-link"><i class="fas fa-tags"></i> Kategori Pekerjaan</a></li>
+                            <li class="nav-item"><a href="/admin/locations" class="nav-link"><i class="fas fa-map-marker-alt"></i> Lokasi</a></li>
+                        </ul>
+                    </div>
+                    <div class="nav-section">
+                        <div class="nav-section-title">Data Inti</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item"><a href="/admin/companies" class="nav-link"><i class="fas fa-building"></i> Perusahaan</a></li>
+                            <li class="nav-item"><a href="/admin/jobs" class="nav-link active"><i class="fas fa-briefcase"></i> Lowongan</a></li>
+                        </ul>
+                    </div>
+                    <div class="nav-section">
+                        <div class="nav-section-title">Lamaran & Relasi</div>
+                        <ul class="nav-menu">
+                             <li class="nav-item"><a href="/admin/applications" class="nav-link"><i class="fas fa-file-alt"></i> Lamaran</a></li>
+                             <li class="nav-item"><a href="/admin/application-notes" class="nav-link"><i class="fas fa-sticky-note"></i> Catatan Lamaran</a></li>
+                             <li class="nav-item"><a href="/admin/user-skills" class="nav-link"><i class="fas fa-user-cog"></i> Skill Pelamar</a></li>
+                             <li class="nav-item"><a href="/admin/user-experiences" class="nav-link"><i class="fas fa-briefcase"></i> Pengalaman Pelamar</a></li>
+                             <li class="nav-item"><a href="/admin/user-educations" class="nav-link"><i class="fas fa-graduation-cap"></i> Pendidikan Pelamar</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-card">
+            <div class="content-body">
+                <form method="POST" action="/admin/jobs" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title">Judul Lowongan <span class="required">*</span></label>
+                        <input type="text" id="title" name="title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_company">Perusahaan <span class="required">*</span></label>
+                        <select id="id_company" name="id_company" class="form-control" required>
+                            <option value="">-- Pilih Perusahaan --</option>
+                            {% for company in companies %}<option value="{{ company.id }}">{{ company.name }}</option>{% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_category">Kategori <span class="required">*</span></label>
+                        <select id="id_category" name="id_category" class="form-control" required>
+                            <option value="">-- Pilih Kategori --</option>
+                            {% for category in categories %}<option value="{{ category.id }}">{{ category.name }}</option>{% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_location">Lokasi <span class="required">*</span></label>
+                        <select id="id_location" name="id_location" class="form-control" required>
+                            <option value="">-- Pilih Lokasi --</option>
+                            {% for location in locations %}<option value="{{ location.id }}">{{ location.city }}</option>{% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="job_type">Jenis Pekerjaan <span class="required">*</span></label>
+                        <select id="job_type" name="job_type" class="form-control" required>
+                            <option value="Full-time">Full-time</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Internship">Internship</option>
+                            <option value="Remote">Remote</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status Lowongan <span class="required">*</span></label>
+                        <select id="status" name="status" class="form-control" required>
+                            <option value="open" selected>Open</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="salary_min">Gaji Minimum</label>
+                        <input type="number" id="salary_min" name="salary_min" class="form-control" placeholder="Contoh: 5000000">
+                    </div>
+                    <div class="form-group">
+                        <label for="salary_max">Gaji Maksimum</label>
+                        <input type="number" id="salary_max" name="salary_max" class="form-control" placeholder="Contoh: 8000000">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Deskripsi <span class="required">*</span></label>
+                        <textarea id="description" name="description" class="form-control" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="requirements">Persyaratan <span class="required">*</span></label>
+                        <textarea id="requirements" name="requirements" class="form-control" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="job_image">Gambar Lowongan (Opsional)</label>
+                        <input type="file" id="job_image" name="job_image" class="form-control" accept="image/*">
+                        <small class="form-help">Jika kosong, logo perusahaan akan digunakan. Maks 2MB.</small>
+                    </div>
+                    <div class="form-actions">
+                        <a href="/admin/jobs" class="btn btn-secondary">Batal</a>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan Lowongan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

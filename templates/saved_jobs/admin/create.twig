@@ -1,0 +1,24 @@
+{# {% extends "layouts/main.twig" %}
+{% block content %} #}
+<h2>Tambah Simpanan Pekerjaan</h2>
+
+<form method="POST" action="/admin/saved-jobs">
+    <div class="mb-3">
+        <label for="id_user">Pelamar</label>
+        <select name="id_user" class="form-control">
+            {% for u in users %}
+                <option value="{{ u.id }}">{{ u.full_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="id_job">Pekerjaan</label>
+        <select name="id_job" class="form-control">
+            {% for j in jobs %}
+                <option value="{{ j.id }}">{{ j.title }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Simpan</button>
+</form>
+{# {% endblock %} #}

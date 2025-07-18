@@ -1,0 +1,271 @@
+{% extends "layout/base.twig" %}
+
+{% block title %}Add Work Experience - Jobstack{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="/css/seeker.css">
+{% endblock %}
+
+{% block content %}
+<div class="seeker-dashboard">
+    <div class="dashboard-container">
+        <!-- Page Header -->
+        <div class="dashboard-header fade-in">
+            <div class="dashboard-welcome">
+                <div class="welcome-content">
+                    <h1>Add Work Experience</h1>
+                    <p>Share your professional journey and achievements</p>
+                </div>
+                <a href="/seeker/user-experiences" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Experience
+                </a>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Sidebar Navigation -->
+            <div class="dashboard-sidebar slide-up">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-user"></i>
+                        Profile Management
+                    </h3>
+                    <ul class="sidebar-menu">
+                        <li>
+                            <a href="/seeker/dashboard">
+                                <i class="fas fa-tachometer-alt"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/seeker/profile">
+                                <i class="fas fa-edit"></i>
+                                Edit Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/seeker/user-skills">
+                                <i class="fas fa-cogs"></i>
+                                Skills & Certifications
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/seeker/user-experiences" class="active">
+                                <i class="fas fa-briefcase"></i>
+                                Work Experience
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/seeker/user-educations">
+                                <i class="fas fa-graduation-cap"></i>
+                                Education
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="dashboard-main slide-up">
+                <div class="form-section" data-autosave="add-experience">
+                    <h3 class="form-title">
+                        <i class="fas fa-plus-circle"></i>
+                        Experience Details
+                    </h3>
+                    
+                    <form method="POST" action="/seeker/user-experiences" enctype="multipart/form-data">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label" for="position">Job Title *</label>
+                                <input type="text" 
+                                       name="position" 
+                                       id="position" 
+                                       class="form-control" 
+                                       placeholder="e.g. Senior Software Engineer"
+                                       required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="company_name">Company Name *</label>
+                                <input type="text" 
+                                       name="company_name" 
+                                       id="company_name" 
+                                       class="form-control" 
+                                       placeholder="e.g. PT Teknologi Indonesia"
+                                       required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="start_date">Start Date *</label>
+                                <input type="date" 
+                                       name="start_date" 
+                                       id="start_date" 
+                                       class="form-control" 
+                                       required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="end_date">End Date</label>
+                                <input type="date" 
+                                       name="end_date" 
+                                       id="end_date" 
+                                       class="form-control">
+                                <small style="color: var(--text-light); font-size: 0.8rem; margin-top: 0.25rem; display: block;">
+                                    Leave empty if you're currently working here
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="description">Job Description</label>
+                            <textarea name="description" 
+                                      id="description" 
+                                      class="form-control" 
+                                      rows="6"
+                                      placeholder="Describe your responsibilities, achievements, and key contributions in this role..."></textarea>
+                            <small style="color: var(--text-light); font-size: 0.8rem; margin-top: 0.25rem; display: block;">
+                                Include specific achievements, technologies used, and impact you made
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="certificate_url">Work Certificate/Reference Letter</label>
+                            <input type="file" 
+                                   name="certificate_url" 
+                                   id="certificate_url" 
+                                   accept="image/*,application/pdf" 
+                                   class="form-control"
+                                   data-max-size="5242880">
+                            <small style="color: var(--text-light); font-size: 0.8rem; margin-top: 0.25rem; display: block;">
+                                Upload work certificate, reference letter, or achievement document (Max 5MB)
+                            </small>
+                        </div>
+
+                        <div class="form-actions" style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i>
+                                Save Experience
+                            </button>
+                            <a href="/seeker/user-experiences" class="btn btn-secondary">
+                                <i class="fas fa-times"></i>
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tips Section -->
+                <div class="form-section">
+                    <h3 class="form-title">
+                        <i class="fas fa-lightbulb"></i>
+                        Tips for Better Experience Profile
+                    </h3>
+                    
+                    <div class="tips-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                        <div class="tip-card" style="background: var(--light-blue); border-radius: 12px; padding: 1.5rem;">
+                            <div class="tip-icon" style="font-size: 1.5rem; color: var(--primary-blue); margin-bottom: 1rem;">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Highlight Achievements</h4>
+                            <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">
+                                Focus on specific accomplishments and quantifiable results rather than just listing duties.
+                            </p>
+                        </div>
+
+                        <div class="tip-card" style="background: #e8f5e8; border-radius: 12px; padding: 1.5rem;">
+                            <div class="tip-icon" style="font-size: 1.5rem; color: var(--success-color); margin-bottom: 1rem;">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Use Numbers</h4>
+                            <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">
+                                Include metrics like "Increased sales by 25%" or "Managed team of 10 people".
+                            </p>
+                        </div>
+
+                        <div class="tip-card" style="background: #fff3e0; border-radius: 12px; padding: 1.5rem;">
+                            <div class="tip-icon" style="font-size: 1.5rem; color: var(--warning-color); margin-bottom: 1rem;">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Mention Technologies</h4>
+                            <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">
+                                List relevant tools, technologies, and methodologies you used in this role.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/js/seeker.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-calculate duration when dates are selected
+            const startDate = document.getElementById('start_date');
+            const endDate = document.getElementById('end_date');
+            
+            function updateDuration() {
+                if (startDate.value) {
+                    const start = new Date(startDate.value);
+                    const end = endDate.value ? new Date(endDate.value) : new Date();
+                    
+                    const diffTime = Math.abs(end - start);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    const years = Math.floor(diffDays / 365);
+                    const months = Math.floor((diffDays % 365) / 30);
+                    
+                    let duration = '';
+                    if (years > 0) duration += years + ' year' + (years > 1 ? 's' : '');
+                    if (months > 0) {
+                        if (duration) duration += ' ';
+                        duration += months + ' month' + (months > 1 ? 's' : '');
+                    }
+                    
+                    // Show duration hint
+                    let durationHint = document.querySelector('.duration-hint');
+                    if (!durationHint) {
+                        durationHint = document.createElement('small');
+                        durationHint.className = 'duration-hint';
+                        durationHint.style.cssText = 'color: var(--primary-blue); font-size: 0.8rem; margin-top: 0.25rem; display: block; font-weight: 500;';
+                        endDate.parentNode.appendChild(durationHint);
+                    }
+                    
+                    if (duration) {
+                        durationHint.textContent = `Duration: ${duration}`;
+                    } else {
+                        durationHint.textContent = '';
+                    }
+                }
+            }
+            
+            startDate.addEventListener('change', updateDuration);
+            endDate.addEventListener('change', updateDuration);
+            
+            // Character counter for description
+            const description = document.getElementById('description');
+            const counter = document.createElement('div');
+            counter.style.cssText = 'text-align: right; color: var(--text-light); font-size: 0.8rem; margin-top: 0.25rem;';
+            description.parentNode.appendChild(counter);
+            
+            function updateCounter() {
+                const length = description.value.length;
+                counter.textContent = `${length} characters`;
+                
+                if (length > 500) {
+                    counter.style.color = 'var(--success-color)';
+                } else if (length > 200) {
+                    counter.style.color = 'var(--warning-color)';
+                } else {
+                    counter.style.color = 'var(--text-light)';
+                }
+            }
+            
+            description.addEventListener('input', updateCounter);
+            updateCounter();
+        });
+    </script>
+{% endblock %}

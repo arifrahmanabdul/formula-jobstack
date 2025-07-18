@@ -1,0 +1,26 @@
+{# {% extends "layouts/main.twig" %}
+{% block content %} #}
+<h2>Data Pendidikan Pelamar</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nama</th>
+            <th>Institusi</th>
+            <th>Gelar</th>
+            <th>Bidang Studi</th>
+            <th>Tahun Lulus</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for edu in educations %}
+        <tr>
+            <td>{{ edu.full_name }}</td>
+            <td>{{ edu.institution_name }}</td>
+            <td>{{ edu.degree }}</td>
+            <td>{{ edu.field_of_study }}</td>
+            <td>{{ edu.graduation_year }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{# {% endblock %} #}

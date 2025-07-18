@@ -1,0 +1,141 @@
+<nav class="main-navbar">
+    <div class="navbar-container">
+        <div class="navbar-content">
+            <!-- Logo and Brand -->
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-briefcase"></i>
+                <span>Jobstack</span>
+            </a>
+            
+            <!-- Navigation Menu -->
+            <ul class="nav-menu">
+    <li class="nav-item">
+        <a class="nav-link {% if current_page == 'home' %}active{% endif %}" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if current_page == 'jobs' %}active{% endif %}" href="/find-job">Find Job</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if current_page == 'about' %}active{% endif %}" href="/about">About</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if current_page == 'faq' %}active{% endif %}" href="/faq">Faqs</a>
+    </li>
+</ul>
+
+            <!-- Search Bar -->
+            <div class="navbar-search">
+                <div class="search-input-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="search-input" placeholder="Job title, keyword, company">
+                </div>
+            </div>
+            
+            <!-- Right Actions -->
+            <div class="navbar-actions">
+                {% if session.user %}
+                    <div class="user-dropdown">
+                        <button class="user-dropdown-btn">
+                            <i class="fas fa-user-circle"></i>
+                            <span>{{ session.user.full_name }}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="user-dropdown-menu">
+                            <a class="dropdown-item" href="/dashboard/{{ session.user.role }}">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard
+                            </a>
+                            <a class="dropdown-item" href="/profile">
+                                <i class="fas fa-user"></i>Profile
+                            </a>
+                            {% if session.user.role == 'seeker' %}
+                                <a class="dropdown-item" href="/applications">
+                                    <i class="fas fa-file-alt"></i>My Applications
+                                </a>
+                                <a class="dropdown-item" href="/saved-jobs">
+                                    <i class="fas fa-heart"></i>Saved Jobs
+                                </a>
+                            {% endif %}
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item logout" href="/logout">
+                                <i class="fas fa-sign-out-alt"></i>Logout
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a class="sign-in-link" href="/login">Sign In</a>
+                {% endif %}
+                
+                <a class="post-job-btn" href="/register">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Toggle -->
+<div class="mobile-toggle">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+    </button>
+</div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-content">
+        <div class="mobile-menu-header">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-briefcase"></i>
+                <span>Jobstack</span>
+            </a>
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <ul class="mobile-nav-menu">
+            <li><a href="/" onclick="toggleMobileMenu()">Home</a></li>
+            <li><a href="/jobs" onclick="toggleMobileMenu()">Find Job</a></li>
+            <li><a href="/support" onclick="toggleMobileMenu()">Customer Supports</a></li>
+        </ul>
+        
+        <div class="mobile-search">
+            <div class="search-input-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-input" placeholder="Job title, keyword, company">
+            </div>
+        </div>
+        
+        <div class="mobile-menu-footer">
+            {% if session.user %}
+                <a class="mobile-user-link" href="/dashboard/{{ session.user.role }}" onclick="toggleMobileMenu()">
+                    <i class="fas fa-user-circle"></i>
+                    {{ session.user.full_name }}
+                </a>
+                <a class="mobile-logout" href="/logout" onclick="toggleMobileMenu()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            {% else %}
+                <a class="mobile-sign-in" href="/login" onclick="toggleMobileMenu()">Sign In</a>
+            {% endif %}
+            
+            <a class="mobile-post-job" href="/jobs/create" onclick="toggleMobileMenu()">Post A Job</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenu.classList.toggle('active');
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    
+    if (!mobileMenu.contains(event.target) && !mobileToggle.contains(event.target)) {
+        mobileMenu.classList.remove('active');
+    }
+});
+</script>

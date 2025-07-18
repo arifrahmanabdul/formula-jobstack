@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Skill - Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="header-left">
+                <h1><i class="fas fa-edit"></i> Edit Skill</h1>
+                <p>Perbarui informasi keahlian</p>
+            </div>
+            <div class="header-right">
+                <a href="/admin/skills" class="logout-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Kembali ke Daftar Skill</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="admin-layout">
+            <!-- Navigation -->
+            <div class="nav-card">
+                <div class="nav-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Admin Panel</h2>
+                    <p>Navigasi sistem administrasi</p>
+                </div>
+                
+                <div class="nav-content">
+                    <!-- Dashboard -->
+                    <div class="nav-section">
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/dashboard/admin" class="nav-link active">
+                                    <i class="fas fa-home"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Master Data -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Master Data</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/skills" class="nav-link">
+                                    <i class="fas fa-cogs"></i>
+                                    Skills
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/industries" class="nav-link">
+                                    <i class="fas fa-industry"></i>
+                                    Industri
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/job-categories" class="nav-link">
+                                    <i class="fas fa-tags"></i>
+                                    Kategori Pekerjaan
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/locations" class="nav-link">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Lokasi
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Data Inti -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Data Inti</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/companies" class="nav-link">
+                                    <i class="fas fa-building"></i>
+                                    Perusahaan
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/jobs" class="nav-link">
+                                    <i class="fas fa-briefcase"></i>
+                                    Lowongan
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Lamaran & Relasi -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Lamaran & Relasi</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/applications" class="nav-link">
+                                    <i class="fas fa-file-alt"></i>
+                                    Lamaran
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/application-notes" class="nav-link">
+                                    <i class="fas fa-sticky-note"></i>
+                                    Catatan Lamaran
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-skills" class="nav-link">
+                                    <i class="fas fa-user-cog"></i>
+                                    Skill Pelamar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-experiences" class="nav-link">
+                                    <i class="fas fa-briefcase"></i>
+                                    Pengalaman Pelamar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-educations" class="nav-link">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    Pendidikan Pelamar
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="content-card">
+                <div class="content-header">
+                    <h2 class="content-title">
+                        <i class="fas fa-edit"></i>
+                        Edit Skill
+                    </h2>
+                </div>
+                <div class="content-body">
+                    <form id="editSkillForm" class="form-container">
+                        <input type="hidden" id="skillId" value="{{ skill.id }}">
+                        
+                        <div class="form-group">
+                            <label for="name">Nama Skill <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" value="{{ skill.name }}" required>
+                            <div class="error-message" id="nameError"></div>
+                            <small class="form-help">Perbarui nama keahlian</small>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='/admin/skills'">
+                                <i class="fas fa-times"></i>
+                                Batal
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <i class="fas fa-save"></i>
+                                Perbarui Skill
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('editSkillForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const nameInput = document.getElementById('name');
+            const nameError = document.getElementById('nameError');
+            const skillId = document.getElementById('skillId').value;
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Clear previous errors
+                nameError.textContent = '';
+                nameInput.classList.remove('error');
+                
+                // Validate
+                if (!nameInput.value.trim()) {
+                    nameError.textContent = 'Nama skill tidak boleh kosong';
+                    nameInput.classList.add('error');
+                    return;
+                }
+
+                // Show loading
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memperbarui...';
+
+                try {
+                    const response = await fetch(`/admin/skills/update/${skillId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: new URLSearchParams({
+                            name: nameInput.value.trim()
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        // Show success message
+                        showNotification('Skill berhasil diperbarui!', 'success');
+                        
+                        // Redirect after short delay
+                        setTimeout(() => {
+                            window.location.href = '/admin/skills';
+                        }, 1500);
+                    } else {
+                        throw new Error(result.error || 'Gagal memperbarui skill');
+                    }
+                } catch (error) {
+                    nameError.textContent = error.message;
+                    nameInput.classList.add('error');
+                    showNotification(error.message, 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-save"></i> Perbarui Skill';
+                }
+            });
+
+            // Real-time validation
+            nameInput.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.classList.remove('error');
+                    nameError.textContent = '';
+                }
+            });
+        });
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--success-color)' : 'var(--danger-color)'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: var(--border-radius);
+                box-shadow: var(--shadow-lg);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                animation: slideInRight 0.3s ease;
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

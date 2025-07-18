@@ -1,0 +1,29 @@
+{# {% extends "layouts/main.twig" %}
+{% block content %} #}
+<h2>Edit Riwayat Pendidikan</h2>
+
+<form method="POST" action="/seeker/user-educations/update/{{ education.id }}"enctype="multipart/form-data">
+    <div class="mb-3">
+        <label>Institusi</label>
+        <input type="text" name="institution_name" class="form-control" value="{{ education.institution_name }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Gelar</label>
+        <input type="text" name="degree" class="form-control" value="{{ education.degree }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Bidang Studi</label>
+        <input type="text" name="field_of_study" class="form-control" value="{{ education.field_of_study }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Tahun Lulus</label>
+        <input type="number" name="graduation_year" class="form-control" value="{{ education.graduation_year }}" required>
+    </div>
+      <div class="mb-3">
+        <label>Upload Ijazah (PDF, Maks 1MB)</label>
+        <input type="file" name="certificate" class="form-control"value="{{ education.certificate_url }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a href="/seeker/user-educations" class="btn btn-secondary">Batal</a>
+</form>
+{# {% endblock %} #}

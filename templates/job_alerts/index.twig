@@ -1,0 +1,35 @@
+<h2>Daftar Job Alerts</h2>
+
+<a href="/admin/job-alerts/create" class="btn btn-primary mb-3">Tambah Alert</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Keyword</th>
+            <th>Pelamar</th>
+            <th>Lokasi</th>
+            <th>Kategori</th>
+            <th>Dibuat</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for alert in alerts %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ alert.keywords }}</td>
+            <td>{{ alert.user_name }}</td>
+            <td>{{ alert.location_city ?? '-' }}</td>
+            <td>{{ alert.category_name ?? '-' }}</td>
+            <td>{{ alert.created_at }}</td>
+            <td>
+                <a href="/admin/job-alerts/edit/{{ alert.id }}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="/admin/job-alerts/delete/{{ alert.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus alert ini?')">Hapus</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" class="text-center">Belum ada data alert.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lamar Pekerjaan - {{ job.title }}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/admin2.css" rel="stylesheet">
+    <style>
+        .job-info-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .job-info-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        .job-detail {
+            margin-bottom: 10px;
+        }
+        .job-detail strong {
+            color: #34495e;
+            display: inline-block;
+            width: 120px;
+        }
+        .salary-range {
+            color: #27ae60;
+            font-weight: 600;
+        }
+        .form-section {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .form-section h4 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .file-upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+            background: #fafafa;
+            transition: border-color 0.3s;
+        }
+        .file-upload-area:hover {
+            border-color: #3498db;
+        }
+        .file-upload-area i {
+            font-size: 2em;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .alert-info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .required {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="header-left">
+                <h1><i class="fas fa-paper-plane"></i> Lamar Pekerjaan</h1>
+                <p>Masukan formulir lamaran anda</p>
+            </div>
+            <div class="header-right">
+                <a href="/seeker/find-job" class="logout-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Kembali ke Daftar Lowongan</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="admin-layout">
+        <div class="nav-card">
+        <div class="nav-header">
+          <h2><i class="fas fa-user"></i> Seeker Panel</h2>
+          <p>Kelola profil dan lamar pekerjaan</p>
+        </div>
+
+        <div class="nav-content">
+          <div class="nav-section">
+            <ul class="nav-menu">
+              <li class="nav-item">
+                <a href="{{ base_path }}/dashboard/seeker" class="nav-link">
+                  <i class="fas fa-home"></i> Dashboard
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="nav-section">
+            <div class="nav-section-title">Pencarian Pekerjaan</div>
+            <ul class="nav-menu">
+              <li class="nav-item">
+                <a href="{{ base_path }}/seeker/applications" class="nav-link">
+                  <i class="fas fa-file-alt"></i> Lamaran Saya
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ base_path }}/seeker/find-job" class="nav-link active">
+                  <i class="fas fa-briefcase""></i> Daftar Lowongan
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="nav-section">
+            <div class="nav-section-title">Profil Saya</div>
+            <ul class="nav-menu">
+              <li class="nav-item">
+                <a href="{{ base_path }}/seeker/profile" class="nav-link">
+                  <i class="fas fa-user-edit"></i> Edit Profil
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ base_path }}/seeker/user-skills" class="nav-link">
+                  <i class="fas fa-cogs"></i> Skill & Sertifikasi
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ base_path }}/seeker/user-experiences" class="nav-link">
+                  <i class="fas fa-briefcase"></i> Pengalaman Kerja
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ base_path }}/seeker/user-educations" class="nav-link">
+                  <i class="fas fa-graduation-cap"></i> Pendidikan
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+        <!-- Main Content -->
+        <div class="admin-content">
+            <!-- Job Information Card -->
+            <div class="job-info-card">
+                <h3><i class="fas fa-briefcase"></i> {{ job.title }}</h3>
+                <div class="job-detail">
+                    <strong>Perusahaan:</strong> {{ job.company_name }}
+                </div>
+                <div class="job-detail">
+                    <strong>Kategori:</strong> {{ job.category_name }}
+                </div>
+                <div class="job-detail">
+                    <strong>Lokasi:</strong> {{ job.city }}, {{ job.province }}
+                </div>
+                <div class="job-detail">
+                    <strong>Tipe:</strong> {{ job.job_type }}
+                </div>
+                {% if job.salary_min and job.salary_max %}
+                <div class="job-detail">
+                    <strong>Gaji:</strong> 
+                    <span class="salary-range">
+                        Rp {{ (job.salary_min / 1000000)|number_format(0, ',', '.') }}jt - 
+                        Rp {{ (job.salary_max / 1000000)|number_format(0, ',', '.') }}jt
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Application Form -->
+            <form method="POST" action="/seeker/applications/submit/{{ job.id }}" enctype="multipart/form-data">
+                <div class="form-section">
+                    <h4><i class="fas fa-edit"></i> Surat Lamaran</h4>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        Tuliskan surat lamaran yang menarik dan sesuai dengan posisi yang dilamar. 
+                        Jelaskan mengapa Anda tertarik dengan posisi ini dan apa yang dapat Anda kontribusikan.
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cover_letter_text">
+                            Isi Surat Lamaran <span class="required">*</span>
+                        </label>
+                        <textarea 
+                            name="cover_letter_text" 
+                            id="cover_letter_text" 
+                            class="form-control" 
+                            placeholder="Contoh: Saya tertarik dengan posisi {{ job.title }} di {{ job.company_name }} karena..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cover_letter">
+                            Upload Surat Lamaran (PDF) <small>(Opsional)</small>
+                        </label>
+                        <div class="file-upload-area">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Klik untuk memilih file PDF atau drag & drop di sini</p>
+                            <input 
+                                type="file" 
+                                name="cover_letter" 
+                                id="cover_letter" 
+                                accept=".pdf"
+                                style="display: none;"
+                            >
+                            <small>Maksimal ukuran file: 5MB</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Requirements Reference -->
+                <div class="form-section">
+                    <h4><i class="fas fa-list-check"></i> Persyaratan Pekerjaan</h4>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                        {{ job.requirements|nl2br }}
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="btn-group">
+                    <a href="/seeker/find-job/detail/{{ job.id }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Kembali
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Kirim Lamaran
+                    </button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        // File upload handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('cover_letter');
+            const uploadArea = document.querySelector('.file-upload-area');
+            
+            uploadArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const fileName = file.name;
+                    const fileSize = (file.size / 1024 / 1024).toFixed(2);
+                    uploadArea.innerHTML = `
+                        <i class="fas fa-file-pdf" style="color: #e74c3c;"></i>
+                        <p><strong>${fileName}</strong></p>
+                        <small>Ukuran: ${fileSize} MB</small>
+                    `;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

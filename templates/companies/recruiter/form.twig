@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Edit Profil Perusahaan - Recruiter Panel</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ base_path }}/css/admin.css">
+    <link rel="stylesheet" href="{{ base_path }}/css/admin2.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-left">
+                <h1>Panel Perekrut</h1>
+                <p>Selamat datang, {{ session.user.full_name|default('Recruiter') }}!</p>
+            </div>
+            <div class="header-right">
+                <a href="/dashboard/recruiter" class="logout-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Kembali ke Dashboard</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <div class="admin-layout">
+            <!-- Sidebar Navigation -->
+            <div class="nav-card">
+                <div class="nav-header">
+                    <h2><i class="fas fa-user-tie"></i> Recruiter Panel</h2>
+                    <p>Kelola informasi lowongan dan pelamar</p>
+                </div>
+                <div class="nav-content">
+                    <div class="nav-section">
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="{{ base_path }}/dashboard/recruiter" class="nav-link active">
+                                    <i class="fas fa-home"></i> Dashboard
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <div class="nav-section-title">Perusahaan</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="{{ base_path }}/recruiter/profile/edit" class="nav-link">
+                                    <i class="fas fa-user-edit"></i> Edit Profil
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <div class="nav-section-title">Lowongan</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="{{ base_path }}/recruiter/jobs" class="nav-link">
+                                    <i class="fas fa-briefcase"></i> Kelola Lowongan
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <div class="nav-section-title">Pelamar</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="{{ base_path }}/recruiter/applications" class="nav-link">
+                                    <i class="fas fa-file-alt"></i> Lamaran Masuk
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <main class="content-card">
+                <div class="content-header">
+                    <h3 class="content-title">
+                        <i class="fas fa-edit"></i>
+                        Edit Profil Perusahaan
+                    </h3>
+                </div>
+                <div class="content-body">
+                    <div class="form-container">
+                        <form id="companyForm" action="{{ base_path }}/recruiter/profile/update" method="POST" enctype="multipart/form-data">
+                            
+                            <div class="form-group">
+                                <label for="name">Nama Perusahaan <span class="required">*</span></label>
+                                <input type="text" id="name" name="name" class="form-control" value="{{ company.name|default('') }}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="id_industry">Industri</label>
+                                <select id="id_industry" name="id_industry" class="form-control">
+                                    <option value="">-- Pilih Industri --</option>
+                                    {% for industry in industries %}
+                                        <option value="{{ industry.id }}" {{ company.id_industry == industry.id ? 'selected' : '' }}>
+                                            {{ industry.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="website">Website</label>
+                                <input type="url" id="website" name="website" class="form-control" value="{{ company.website|default('') }}" placeholder="https://contoh.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Deskripsi Perusahaan</label>
+                                <textarea id="description" name="description" class="form-control" rows="5" placeholder="Jelaskan tentang perusahaan Anda...">{{ company.description|default('') }}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address">Alamat</label>
+                                <textarea id="address" name="address" class="form-control" rows="3" placeholder="Jl. Contoh No. 123, Kota, Negara">{{ company.address|default('') }}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="logo_file">Logo Perusahaan</label>
+                                <input type="file" id="logo_file" name="logo_file" class="form-control" accept="image/png, image/jpeg, image/gif">
+                                <small class="form-help">Ukuran maks 2MB. Kosongkan jika tidak ingin mengubah logo.</small>
+                                
+                                {% if company.logo_filename %}
+                                <div style="margin-top: 10px;">
+                                    <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 5px;">Logo saat ini:</p>
+                                    <img src="{{ base_path }}/uploads/logos/{{ company.logo_filename }}" alt="Logo {{ company.name }}" style="max-width: 150px; border-radius: 8px; border: 1px solid #ddd;">
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-actions">
+                                <a href="{{ base_path }}/dashboard/recruiter" class="btn btn-secondary">
+                                    <i class="fas fa-times"></i> Batal
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Simpan Perubahan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Script untuk menandai link navigasi yang aktif
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            navLinks.forEach(link => {
+                const linkPath = new URL(link.href).pathname;
+                if (currentPath === linkPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

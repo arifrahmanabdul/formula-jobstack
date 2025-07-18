@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Kategori Pekerjaan - Admin Panel</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/admin2.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="header-left">
+                <h1><i class="fas fa-edit"></i> Edit Kategori Pekerjaan</h1>
+                <p>Perbarui informasi kategori pekerjaan</p>
+            </div>
+            <div class="header-right">
+                <a href="/admin/job-categories" class="logout-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Kembali ke Daftar Kategori</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="admin-layout">
+            <!-- Navigation Sidebar -->
+            <div class="nav-card">
+                <div class="nav-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Admin Panel</h2>
+                    <p>Navigasi sistem administrasi</p>
+                </div>
+                
+                <div class="nav-content">
+                    <!-- Dashboard -->
+                    <div class="nav-section">
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/dashboard/admin" class="nav-link">
+                                    <i class="fas fa-home"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Master Data -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Master Data</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/skills" class="nav-link">
+                                    <i class="fas fa-cogs"></i>
+                                    Skills
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/industries" class="nav-link">
+                                    <i class="fas fa-industry"></i>
+                                    Industri
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/job-categories" class="nav-link active">
+                                    <i class="fas fa-tags"></i>
+                                    Kategori Pekerjaan
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/locations" class="nav-link">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Lokasi
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Data Inti -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Data Inti</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/companies" class="nav-link">
+                                    <i class="fas fa-building"></i>
+                                    Perusahaan
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/jobs" class="nav-link">
+                                    <i class="fas fa-briefcase"></i>
+                                    Lowongan
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Lamaran & Relasi -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Lamaran & Relasi</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/applications" class="nav-link">
+                                    <i class="fas fa-file-alt"></i>
+                                    Lamaran
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/application-notes" class="nav-link">
+                                    <i class="fas fa-sticky-note"></i>
+                                    Catatan Lamaran
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-skills" class="nav-link">
+                                    <i class="fas fa-user-cog"></i>
+                                    Skill Pelamar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-experiences" class="nav-link">
+                                    <i class="fas fa-briefcase"></i>
+                                    Pengalaman Pelamar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-educations" class="nav-link">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    Pendidikan Pelamar
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="content-card">
+                <div class="content-header">
+                    <h2 class="content-title">
+                        <i class="fas fa-edit"></i>
+                        Edit Kategori Pekerjaan: {{ category.name }}
+                    </h2>
+                </div>
+                <div class="content-body">
+                    <!-- Form Container -->
+                    <div class="form-container">
+                        {% if error %}
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-circle"></i>
+                                {{ error }}
+                            </div>
+                        {% endif %}
+
+                        <form id="categoryForm" method="POST" action="/admin/job-categories/{{ category.id }}" enctype="multipart/form-data" class="admin-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name" class="form-label">
+                                        Nama Kategori <span class="required">*</span>
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="name" 
+                                        name="name" 
+                                        class="form-control {% if errors.name %}error{% endif %}" 
+                                        value="{{ old.name ?? category.name }}"
+                                        required 
+                                        maxlength="100"
+                                        placeholder="Masukkan nama kategori pekerjaan"
+                                    >
+                                    {% if errors.name %}
+                                        <span class="error-message">{{ errors.name }}</span>
+                                    {% endif %}
+                                    <small class="form-help">Nama kategori yang akan ditampilkan kepada pengguna</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="slug" class="form-label">
+                                        Slug <span class="required">*</span>
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="slug" 
+                                        name="slug" 
+                                        class="form-control {% if errors.slug %}error{% endif %}" 
+                                        value="{{ old.slug ?? category.slug }}"
+                                        required 
+                                        maxlength="120"
+                                        placeholder="nama-kategori-pekerjaan"
+                                    >
+                                    {% if errors.slug %}
+                                        <span class="error-message">{{ errors.slug }}</span>
+                                    {% endif %}
+                                    <small class="form-help">URL-friendly version dari nama kategori</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="icon_image" class="form-label">
+                                    Ikon Kategori
+                                </label>
+                                
+                                {% if category.icon_image %}
+                                    <div class="current-image">
+                                        <label class="form-sublabel">Ikon Saat Ini:</label>
+                                        <div class="image-preview-container">
+                                            <img src="{{ category.icon_image }}" alt="{{ category.name }}" style="max-width: 100px; max-height: 100px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                
+                                <div class="file-upload-container">
+                                    <input 
+                                        type="file" 
+                                        id="icon_image" 
+                                        name="icon_image" 
+                                        class="form-control file-input {% if errors.icon_image %}error{% endif %}" 
+                                        accept="image/*"
+                                    >
+                                    <div class="file-upload-preview" id="imagePreview" style="display: none;">
+                                        <img id="previewImg" src="/placeholder.svg" alt="Preview" style="max-width: 100px; max-height: 100px; object-fit: cover; border-radius: 4px;">
+                                        <button type="button" class="btn btn-sm btn-danger" onclick="removeImagePreview()">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                {% if errors.icon_image %}
+                                    <span class="error-message">{{ errors.icon_image }}</span>
+                                {% endif %}
+                                <small class="form-help">Format yang didukung: JPG, PNG, GIF, SVG. Maksimal 2MB (Kosongkan jika tidak ingin mengubah)</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description" class="form-label">
+                                    Deskripsi
+                                </label>
+                                <textarea 
+                                    id="description" 
+                                    name="description" 
+                                    class="form-control {% if errors.description %}error{% endif %}" 
+                                    rows="4" 
+                                    maxlength="1000"
+                                    placeholder="Deskripsi singkat tentang kategori pekerjaan ini..."
+                                >{{ old.description ?? category.description }}</textarea>
+                                {% if errors.description %}
+                                    <span class="error-message">{{ errors.description }}</span>
+                                {% endif %}
+                                <small class="form-help">Deskripsi opsional, maksimal 1000 karakter</small>
+                            </div>
+
+                            <div class="form-actions">
+                                <a href="/admin/job-categories" class="btn btn-secondary">
+                                    <i class="fas fa-times"></i>
+                                    Batal
+                                </a>
+                                <button type="submit" class="btn btn-primary" id="submitBtn">
+                                    <i class="fas fa-save"></i>
+                                    Perbarui Kategori
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/js/admin2.js"></script>
+    <script src="/js/admin3.js"></script>
+</body>
+</html>

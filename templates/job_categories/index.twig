@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Kategori Pekerjaan - Admin Panel</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/admin2.css">
+
+    <style>
+    .category-icon {
+        width: 32px;
+        height: 32px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .category-icon-fallback {
+        display: none;
+        color: #999;
+        font-size: 24px;
+    }
+
+    .category-icon:error + .category-icon-fallback {
+        display: inline;
+    }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="header-left">
+                <h1><i class="fas fa-tags"></i> Kelola Kategori Pekerjaan</h1>
+                <p>Kelola daftar kategori pekerjaan yang tersedia dalam sistem</p>
+            </div>
+            <div class="header-right">
+                <a href="/dashboard/admin" class="logout-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Kembali ke Dashboard</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="admin-layout">
+            <!-- Navigation Sidebar -->
+            <div class="nav-card">
+                <div class="nav-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Admin Panel</h2>
+                    <p>Navigasi sistem administrasi</p>
+                </div>
+                
+                <div class="nav-content">
+                    <!-- Dashboard -->
+                    <div class="nav-section">
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/dashboard/admin" class="nav-link">
+                                    <i class="fas fa-home"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Master Data -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Master Data</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/skills" class="nav-link">
+                                    <i class="fas fa-cogs"></i>
+                                    Skills
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/industries" class="nav-link">
+                                    <i class="fas fa-industry"></i>
+                                    Industri
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/job-categories" class="nav-link active">
+                                    <i class="fas fa-tags"></i>
+                                    Kategori Pekerjaan
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/locations" class="nav-link">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Lokasi
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Data Inti -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Data Inti</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/companies" class="nav-link">
+                                    <i class="fas fa-building"></i>
+                                    Perusahaan
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/jobs" class="nav-link">
+                                    <i class="fas fa-briefcase"></i>
+                                    Lowongan
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Lamaran & Relasi -->
+                    <div class="nav-section">
+                        <div class="nav-section-title">Lamaran & Relasi</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/admin/applications" class="nav-link">
+                                    <i class="fas fa-file-alt"></i>
+                                    Lamaran
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/application-notes" class="nav-link">
+                                    <i class="fas fa-sticky-note"></i>
+                                    Catatan Lamaran
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-skills" class="nav-link">
+                                    <i class="fas fa-user-cog"></i>
+                                    Skill Pelamar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-experiences" class="nav-link">
+                                    <i class="fas fa-briefcase"></i>
+                                    Pengalaman Pelamar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/user-educations" class="nav-link">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    Pendidikan Pelamar
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="content-card">
+                <div class="content-header">
+                    <h2 class="content-title">
+                        <i class="fas fa-tags"></i>
+                        Daftar Kategori Pekerjaan
+                    </h2>
+                </div>
+                <div class="content-body">
+                    <!-- Action Bar -->
+                    <div class="action-bar">
+                        <a href="/admin/job-categories/create" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Tambah Kategori
+                        </a>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Cari kategori...">
+                        </div>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div id="loadingState" class="loading-container" style="display: none;">
+                        <div class="loading-spinner"></div>
+                    </div>
+
+                    <!-- Table Container -->
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>IKON</th>
+                                    <th>NAMA KATEGORI</th>
+                                    <th>SLUG</th>
+                                    <th>JUMLAH LOWONGAN</th>
+                                    <th>AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody id="categoriesTableBody">
+                                <!-- Data will be loaded via JavaScript -->
+                            </tbody>
+                        </table>
+                        <!-- Pagination will be added here by JavaScript -->
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="emptyState" class="empty-state" style="display: none;">
+                        <i class="fas fa-tags"></i>
+                        <h3>Belum ada data kategori pekerjaan</h3>
+                        <p>Mulai dengan menambahkan kategori pertama</p>
+                        <a href="/admin/job-categories/create" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Tambah Kategori Pertama
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Tambah Kategori Pekerjaan</h3>
+                <button type="button" class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="categoryForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="categoryName">Nama Kategori <span class="required">*</span></label>
+                        <input type="text" id="categoryName" name="name" class="form-control" required maxlength="100">
+                        <span id="nameError" class="error-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="categorySlug">Slug <span class="required">*</span></label>
+                        <input type="text" id="categorySlug" name="slug" class="form-control" required maxlength="120">
+                        <span id="slugError" class="error-message"></span>
+                        <small class="form-help">URL-friendly version dari nama kategori</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryIcon">Ikon Kategori</label>
+                        <input type="file" id="categoryIcon" name="icon_image" class="form-control" accept="image/*">
+                        <span id="iconError" class="error-message"></span>
+                        <small class="form-help">Format: JPG, PNG, GIF, SVG (Opsional)</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryDescription">Deskripsi</label>
+                        <textarea id="categoryDescription" name="description" class="form-control" rows="3" maxlength="1000"></textarea>
+                        <span id="descriptionError" class="error-message"></span>
+                        <small class="form-help">Opsional, maksimal 1000 karakter</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Batal</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary" form="categoryForm">
+                    <i class="fas fa-save"></i>
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Konfirmasi Hapus</h3>
+                <button type="button" class="modal-close" onclick="closeDeleteModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Apakah Anda yakin ingin menghapus kategori "<strong id="deleteCategoryName"></strong>"?</p>
+                <p class="text-muted">Data akan diarsipkan dan dapat dipulihkan jika diperlukan.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Batal</button>
+                <button type="button" id="confirmDeleteBtn" class="btn btn-danger">
+                    <i class="fas fa-trash"></i>
+                    Hapus
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/js/admin2.js"></script>
+    <script src="/js/admin3.js"></script>
+</body>
+</html>

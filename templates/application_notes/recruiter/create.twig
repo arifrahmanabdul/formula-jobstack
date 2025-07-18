@@ -1,0 +1,27 @@
+<h2>Tambah Catatan Lamaran</h2>
+
+<form method="POST" action="/recruiter/application-notes">
+    <input type="hidden" name="id_application" value="{{ id_application }}">
+
+    <div class="mb-3">
+        <label>Lamaran</label>
+        <input type="text" class="form-control" value="[{{ application.id }}] {{ application.full_name }} - {{ application.title }}" readonly>
+    </div>
+
+    <div class="mb-3">
+        <label>Jenis Catatan</label>
+        <select name="note_type" class="form-control" required>
+            <option value="internal">Internal</option>
+            <option value="feedback">Feedback</option>
+            <option value="interview-off">Interview Offline</option>
+            <option value="interview-on">Interview Online</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Isi Catatan</label>
+        <textarea name="note_text" class="form-control" rows="4" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Simpan</button>
+</form>

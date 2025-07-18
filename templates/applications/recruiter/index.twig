@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Lamaran - Recruiter Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin2.css">
+    <style>
+        .pagination-container { margin-top: 2rem; display: flex; justify-content: center; }
+        .pagination { display: flex; gap: 0.5rem; }
+        .pagination-btn { padding: 0.5rem 0.75rem; border: 1px solid #ddd; background: white; border-radius: 4px; cursor: pointer; text-decoration: none; color: #333; }
+        .pagination-btn:hover { background: #f0f0f0; }
+        .pagination-btn.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+        .badge { display: inline-block; padding: .3em .6em; font-size: 75%; font-weight: 700; line-height: 1; text-align: center; white-space: nowrap; vertical-align: baseline; border-radius: .375rem; text-transform: capitalize; }
+        .badge-new { color: #0369a1; background-color: #e0f2fe; }
+        .badge-viewed { color: #4d7c0f; background-color: #dcfce7; }
+        .badge-sent_to_client { color: #a16207; background-color: #fefce8; }
+        .badge-accepted { color: #166534; background-color: #d1fae5; }
+        .badge-rejected { color: #991b1b; background-color: #fee2e2; }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(2px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 0;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            padding: 1.25rem 1.5rem 0.75rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 0;
+            width: 80px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+
+        .modal-body {
+            padding: 1rem 1.5rem;
+            color: #374151;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .modal-footer {
+            padding: 0.75rem 1.5rem 1.25rem 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        .modal-footer .btn {
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            font-size: 0.875rem;
+        }
+
+        .modal-footer .btn-secondary {
+            background-color: #f3f4f6;
+            color: #374151;
+            border-color: #d1d5db;
+            padding: 0.375rem 0.75rem;
+        }
+
+        .modal-footer .btn-secondary:hover {
+            background-color: #e5e7eb;
+        }
+
+        .modal-footer .btn-danger {
+            background-color: #dc2626;
+            color: white;
+            padding: 0.5rem 1rem;
+        }
+
+        .modal-footer .btn-danger:hover {
+            background-color: #b91c1c;
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .filter-section select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+<div class="admin-container">
+    <div class="admin-header">
+        <div class="header-left">
+            <h1><i class="fas fa-file-alt"></i> Kelola Lamaran</h1>
+            <p>Lihat dan kelola lamaran yang masuk untuk perusahaan Anda</p>
+        </div>
+        <div class="header-right">
+            <a href="/dashboard/recruiter" class="logout-btn"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
+        </div>
+    </div>
+    <div class="admin-layout">
+        <div class="nav-card">
+                <div class="nav-header">
+                    <h2><i class="fas fa-user-tie"></i> Recruiter Panel</h2>
+                    <p>Kelola informasi lowongan dan pelamar</p>
+                </div>
+                <div class="nav-content">
+                    <div class="nav-section">
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/dashboard/recruiter" class="nav-link">
+                                    <i class="fas fa-home"></i> Dashboard
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <div class="nav-section-title">Perusahaan</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/recruiter/profile/edit" class="nav-link">
+                                    <i class="fas fa-user-edit"></i> Edit Profil
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <div class="nav-section-title">Lowongan</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/recruiter/jobs" class="nav-link">
+                                    <i class="fas fa-briefcase"></i> Kelola Lowongan
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <div class="nav-section-title">Pelamar</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/recruiter/applications" class="nav-link active">
+                                    <i class="fas fa-file-alt"></i> Lamaran Masuk
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        <div class="content-card">
+            <div class="content-body">
+                <div class="action-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Cari nama pelamar, lowongan...">
+                    </div>
+                    <div class="filter-section">
+                        <select id="statusFilter">
+                            <option value="">Semua Status</option>
+                            <option value="new">Baru</option>
+                            <option value="viewed">Dilihat</option>
+                            <option value="sent_to_client">Dikirim ke Klien</option>
+                            <option value="accepted">Diterima</option>
+                            <option value="rejected">Ditolak</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary" id="resetBtn">Reset</button>
+                    </div>
+                </div>
+
+                <div id="loadingState" class="loading-container" style="display: none;"><div class="loading-spinner"></div></div>
+
+                <div class="table-container" style="display: none;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nama Pelamar</th>
+                                <th>Lowongan</th>
+                                <th>Status</th>
+                                <th>Tanggal Lamar</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicationsTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <i class="fas fa-file-alt fa-3x"></i>
+                    <h3>Tidak Ada Lamaran</h3>
+                    <p>Belum ada lamaran yang masuk untuk perusahaan Anda.</p>
+                </div>
+
+                <div id="paginationContainer" class="pagination-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal" id="deleteModal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Konfirmasi Hapus</h3>
+            <button class="modal-close" type="button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Anda yakin ingin mengarsipkan lamaran ini? Tindakan ini tidak dapat dibatalkan.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary modal-close">Batal</button>
+            <button type="button" id="confirmDeleteBtn" class="btn btn-danger">Ya, Hapus</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/recruiter-applications.js"></script>
+</body>
+</html>

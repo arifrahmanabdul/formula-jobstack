@@ -1,0 +1,30 @@
+{# {% extends "layouts/main.twig" %}
+
+{% block content %} #}
+<h2>Skill Dibutuhkan untuk: {{ job.title }}</h2>
+
+<a href="/recruiter/job-skills/create/{{ job.id }}" class="btn btn-primary mb-3">+ Tambah Skill</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nama Skill</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for skill in jobSkills %}
+        <tr>
+            <td>{{ skill.skill_name }}</td>
+            <td>
+                <a href="/recruiter/job-skills/delete/{{ job.id }}/{{ skill.id_skill }}"
+                   class="btn btn-sm btn-danger"
+                   onclick="return confirm('Hapus skill ini?')">Hapus</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="/recruiter/jobs" class="btn btn-secondary mt-3">← Kembali ke Daftar Job</a>
+{# {% endblock %} #}

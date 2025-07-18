@@ -1,0 +1,39 @@
+<h2>Edit Review Perusahaan</h2>
+
+<form action="/admin/company-reviews/update/{{ review.id }}" method="POST">
+    <div class="mb-3">
+        <label for="id_company" class="form-label">Perusahaan</label>
+        <select name="id_company" class="form-select" required>
+            {% for company in companies %}
+                <option value="{{ company.id }}" {% if company.id == review.id_company %}selected{% endif %}>{{ company.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_user" class="form-label">Reviewer</label>
+        <select name="id_user" class="form-select" required>
+            {% for user in users %}
+                <option value="{{ user.id }}" {% if user.id == review.id_user %}selected{% endif %}>{{ user.full_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="rating" class="form-label">Rating</label>
+        <input type="number" name="rating" class="form-control" value="{{ review.rating }}" min="1" max="5" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="title" class="form-label">Judul</label>
+        <input type="text" name="title" class="form-control" value="{{ review.title }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="review_text" class="form-label">Review</label>
+        <textarea name="review_text" class="form-control" rows="4" required>{{ review.review_text }}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a href="/admin/company-reviews" class="btn btn-secondary">Batal</a>
+</form>

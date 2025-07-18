@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+session_start();
+
 use App\Application\Handlers\HttpErrorHandler;
 use App\Application\Handlers\ShutdownHandler;
 use App\Application\ResponseEmitter\ResponseEmitter;
@@ -9,6 +11,10 @@ use App\Application\Settings\SettingsInterface;
 use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
+use Slim\Views\Twig;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -33,6 +39,19 @@ $repositories($containerBuilder);
 
 // Build PHP-DI Container instance
 $container = $containerBuilder->build();
+
+// --- AWAL PERBAIKAN ---
+$twig = Twig::create(__DIR__ . '/../templates', ['cache' => false]);
+
+// Secara dinamis menentukan base path dari lokasi index.php
+// Hasilnya akan menjadi "/lowongan-kerja3" jika diakses dari http://localhost/lowongan-kerja3/
+$basePath = rtrim(str_ireplace('index.php', '', $_SERVER['SCRIPT_NAME']), '/');
+$twig->getEnvironment()->addGlobal('base_path', $basePath);
+// --- AKHIR PERBAIKAN ---
+
+$container->set('view', fn() => $twig);
+$container->set(Twig::class, fn() => $twig);
+
 
 // Instantiate the app
 AppFactory::setContainer($container);
@@ -80,3 +99,11 @@ $errorMiddleware->setDefaultErrorHandler($errorHandler);
 $response = $app->handle($request);
 $responseEmitter = new ResponseEmitter();
 $responseEmitter->emit($response);
+
+$app->add(function (Request $request, RequestHandlerInterface $handler): Response {
+    $response = $handler->handle($request);
+    return $response
+        ->withHeader('Access-Control-Allow-Origin', '*') // Ganti * dengan domain jika perlu
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+});

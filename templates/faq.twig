@@ -1,0 +1,358 @@
+{% extends "layout/base.twig" %}
+
+{% block content %}
+<section class="faq-page">
+
+  <!-- Hero Section -->
+  <div class="faq-hero py-5" style="background-color: #f8f9fa;">
+    <div class="container text-center">
+      <h6 class="text-uppercase fw-semibold text-muted mb-2" style="font-size: 0.9rem; letter-spacing: 1px;">
+        PUSAT BANTUAN
+      </h6>
+      <h1 class="display-5 fw-bold text-dark mb-4">
+        Bagaimana Kami Dapat<br class="d-none d-md-block">Membantu Anda Hari Ini?
+      </h1>
+      <p class="lead text-muted mx-auto" style="max-width: 640px;">
+        Bagian Pertanyaan yang Sering Diajukan ini dirancang untuk memandu Anda melalui topik-topik umum 
+        seperti cara melamar kerja, dokumen yang diperlukan, dan timeline seleksi.
+      </p>
+    </div>
+  </div>
+
+  <!-- FAQ Content -->
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="accordion accordion-flush" id="faqAccordion">
+
+          <!-- Tentang Proses Lamaran -->
+          <div class="faq-category mb-4">
+            <h4 class="fw-bold text-dark mb-3 border-bottom pb-2">
+              <i class="fas fa-file-alt text-primary me-2"></i>
+              Tentang Proses Lamaran Kerja
+            </h4>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="app-q1">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#app-a1" aria-expanded="true" aria-controls="app-a1">
+                  Bagaimana cara melamar pekerjaan di situs ini?
+                </button>
+              </h2>
+              <div id="app-a1" class="accordion-collapse collapse show" aria-labelledby="app-q1" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Anda dapat mengklik tombol <strong>"Lamar"</strong> pada setiap lowongan pekerjaan, kemudian ikuti petunjuk untuk mengisi formulir dan mengunggah dokumen yang diperlukan. Pastikan profil Anda sudah lengkap sebelum melamar.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="app-q2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#app-a2" aria-expanded="false" aria-controls="app-a2">
+                  Apakah saya perlu membuat akun untuk melamar?
+                </button>
+              </h2>
+              <div id="app-a2" class="accordion-collapse collapse" aria-labelledby="app-q2" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Ya, Anda perlu membuat akun terlebih dahulu. Dengan memiliki akun, Anda dapat melacak status lamaran, menyimpan pekerjaan favorit, dan memperbarui profil kapan saja.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="app-q3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#app-a3" aria-expanded="false" aria-controls="app-a3">
+                  Bisakah saya melamar lebih dari satu pekerjaan?
+                </button>
+              </h2>
+              <div id="app-a3" class="accordion-collapse collapse" aria-labelledby="app-q3" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Tentu saja! Anda dapat melamar ke beberapa posisi yang sesuai dengan minat dan kualifikasi Anda. Namun, pastikan setiap lamaran disesuaikan dengan persyaratan pekerjaan yang dilamar.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dokumen & CV -->
+          <div class="faq-category mb-4">
+            <h4 class="fw-bold text-dark mb-3 border-bottom pb-2">
+              <i class="fas fa-folder-open text-primary me-2"></i>
+              Dokumen & CV
+            </h4>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="doc-q1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#doc-a1" aria-expanded="false" aria-controls="doc-a1">
+                  Format file apa saja yang diterima untuk CV?
+                </button>
+              </h2>
+              <div id="doc-a1" class="accordion-collapse collapse" aria-labelledby="doc-q1" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Kami menerima format PDF, DOC, dan DOCX dengan ukuran maksimal 5MB. Format PDF lebih direkomendasikan untuk memastikan tampilan CV Anda tetap konsisten saat dibuka oleh perekrut.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="doc-q2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#doc-a2" aria-expanded="false" aria-controls="doc-a2">
+                  Bisakah saya mengedit CV setelah mengirimkannya?
+                </button>
+              </h2>
+              <div id="doc-a2" class="accordion-collapse collapse" aria-labelledby="doc-q2" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Ya, Anda dapat memperbarui CV melalui menu <em>Profil → Dokumen</em>. Unggah versi terbaru CV Anda dan sistem akan otomatis mengganti yang lama untuk lamaran yang masih aktif.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="doc-q3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#doc-a3" aria-expanded="false" aria-controls="doc-a3">
+                  Dokumen apa saja yang perlu disiapkan untuk melamar?
+                </button>
+              </h2>
+              <div id="doc-a3" class="accordion-collapse collapse" aria-labelledby="doc-q3" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Dokumen wajib meliputi CV terbaru dan surat lamaran. Dokumen pendukung seperti portofolio, sertifikat, atau ijazah dapat diunggah sesuai persyaratan pekerjaan yang dilamar.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline & Jadwal -->
+          <div class="faq-category mb-4">
+            <h4 class="fw-bold text-dark mb-3 border-bottom pb-2">
+              <i class="fas fa-clock text-primary me-2"></i>
+              Timeline & Jadwal Seleksi
+            </h4>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="time-q1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#time-a1" aria-expanded="false" aria-controls="time-a1">
+                  Berapa lama proses seleksi biasanya berlangsung?
+                </button>
+              </h2>
+              <div id="time-a1" class="accordion-collapse collapse" aria-labelledby="time-q1" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Rata-rata proses seleksi memakan waktu 7-14 hari kerja dari lamaran hingga keputusan, tergantung pada kebijakan dan timeline rekrutmen masing-masing perusahaan.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="time-q2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#time-a2" aria-expanded="false" aria-controls="time-a2">
+                  Bagaimana cara mengetahui status lamaran saya?
+                </button>
+              </h2>
+              <div id="time-a2" class="accordion-collapse collapse" aria-labelledby="time-q2" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Anda akan menerima notifikasi email dan pemberitahuan di aplikasi. Status lamaran juga dapat dilihat kapan saja melalui dashboard akun Anda di menu "Lamaran Saya".
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="time-q3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#time-a3" aria-expanded="false" aria-controls="time-a3">
+                  Apa yang harus dilakukan jika tidak ada kabar setelah melamar?
+                </button>
+              </h2>
+              <div id="time-a3" class="accordion-collapse collapse" aria-labelledby="time-q3" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Jika tidak ada kabar setelah 2 minggu, Anda dapat mengirim follow-up melalui sistem pesan di platform atau menghubungi perusahaan langsung jika informasi kontak tersedia.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Akun & Pengaturan -->
+          <div class="faq-category mb-4">
+            <h4 class="fw-bold text-dark mb-3 border-bottom pb-2">
+              <i class="fas fa-user-cog text-primary me-2"></i>
+              Akun & Pengaturan
+            </h4>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="acc-q1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-a1" aria-expanded="false" aria-controls="acc-a1">
+                  Bagaimana cara mengatur ulang kata sandi?
+                </button>
+              </h2>
+              <div id="acc-a1" class="accordion-collapse collapse" aria-labelledby="acc-q1" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Klik tautan "Lupa Kata Sandi" di halaman login, masukkan email Anda, dan ikuti petunjuk yang dikirim ke email untuk mengatur ulang kata sandi.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="acc-q2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-a2" aria-expanded="false" aria-controls="acc-a2">
+                  Bisakah saya menghapus akun secara permanen?
+                </button>
+              </h2>
+              <div id="acc-a2" class="accordion-collapse collapse" aria-labelledby="acc-q2" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Ya, Anda dapat menghapus akun melalui menu <em>Pengaturan → Akun</em> dan pilih "Hapus Akun". Harap diperhatikan bahwa tindakan ini tidak dapat dibatalkan dan semua data akan terhapus permanen.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notifikasi Pekerjaan -->
+          <div class="faq-category mb-4">
+            <h4 class="fw-bold text-dark mb-3 border-bottom pb-2">
+              <i class="fas fa-bell text-primary me-2"></i>
+              Notifikasi Pekerjaan
+            </h4>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="alert-q1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#alert-a1" aria-expanded="false" aria-controls="alert-a1">
+                  Bagaimana cara berlangganan notifikasi pekerjaan?
+                </button>
+              </h2>
+              <div id="alert-a1" class="accordion-collapse collapse" aria-labelledby="alert-q1" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Setelah membuat akun, masuk ke dashboard dan pilih kategori pekerjaan yang Anda minati. Anda akan menerima notifikasi email ketika ada lowongan baru yang sesuai dengan preferensi Anda.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="alert-q2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#alert-a2" aria-expanded="false" aria-controls="alert-a2">
+                  Bagaimana cara berhenti menerima notifikasi pekerjaan?
+                </button>
+              </h2>
+              <div id="alert-a2" class="accordion-collapse collapse" aria-labelledby="alert-q2" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Anda dapat berhenti berlangganan kapan saja melalui dashboard di bagian "Notifikasi Pekerjaan" dengan mematikan kategori yang tidak diinginkan, atau klik tautan "unsubscribe" di email notifikasi.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dukungan Teknis -->
+          <div class="faq-category mb-4">
+            <h4 class="fw-bold text-dark mb-3 border-bottom pb-2">
+              <i class="fas fa-tools text-primary me-2"></i>
+              Dukungan Teknis
+            </h4>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="tech-q1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tech-a1" aria-expanded="false" aria-controls="tech-a1">
+                  Saya mengalami masalah saat mengunggah CV, apa yang harus dilakukan?
+                </button>
+              </h2>
+              <div id="tech-a1" class="accordion-collapse collapse" aria-labelledby="tech-q1" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Pastikan format file sudah benar (PDF, DOC, DOCX) dan ukuran tidak melebihi 5MB. Coba gunakan browser yang berbeda atau bersihkan cache browser. Jika masalah berlanjut, hubungi tim dukungan kami.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item mb-2 border rounded">
+              <h2 class="accordion-header" id="tech-q2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tech-a2" aria-expanded="false" aria-controls="tech-a2">
+                  Situs tidak dapat dimuat dengan baik, apa yang bisa saya coba?
+                </button>
+              </h2>
+              <div id="tech-a2" class="accordion-collapse collapse" aria-labelledby="tech-q2" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Coba bersihkan cache dan cookies browser, nonaktifkan ekstensi browser sementara, atau akses situs dari perangkat atau jaringan yang berbeda. Pastikan koneksi internet Anda stabil.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Contact Support -->
+        <div class="text-center mt-5">
+          <div class="bg-light rounded-3 p-4">
+            <h5 class="fw-bold text-dark mb-3">Masih Butuh Bantuan?</h5>
+            <p class="text-muted mb-3">
+              Jika pertanyaan Anda belum terjawab di atas, jangan ragu untuk menghubungi tim dukungan kami.
+            </p>
+            <a href="mailto:support@jobstack.com" class="btn btn-primary me-2">
+              <i class="fas fa-envelope me-2"></i>
+              Hubungi Support
+            </a>
+            <a href="/about" class="btn btn-outline-primary">
+              <i class="fas fa-info-circle me-2"></i>
+              Tentang Kami
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.faq-category {
+  margin-bottom: 2rem;
+}
+
+.accordion-item {
+  border: 1px solid #e9ecef !important;
+  margin-bottom: 0.5rem;
+}
+
+.accordion-button {
+  font-weight: 500;
+  padding: 1rem 1.25rem;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+}
+
+.accordion-body {
+  padding: 1.25rem;
+  line-height: 1.6;
+}
+
+.faq-category h4 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.faq-category h4 i {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .display-5 {
+    font-size: 2rem;
+  }
+  
+  .faq-category h4 {
+    font-size: 1.1rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Auto-open accordion if URL has a hash
+  const hash = window.location.hash;
+  if (hash) {
+    const target = document.querySelector(hash);
+    if (target && target.classList.contains('accordion-collapse')) {
+      const headerBtn = target.previousElementSibling?.querySelector('button');
+      if (headerBtn) {
+        headerBtn.click();
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
+      }
+    }
+  }
+});
+</script>
+{% endblock %}

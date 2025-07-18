@@ -1,0 +1,34 @@
+
+<h2>Catatan Lamaran</h2>
+<a href="/recruiter/application-notes/create">+ Tambah Catatan</a>
+
+<table border="1" cellpadding="6">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ID Application</th>
+            <th>Jenis Catatan</th>
+            <th>Isi Catatan</th>
+            <th>Waktu</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for note in notes %}
+        <tr>
+            <td>{{ note.id }}</td>
+            <td>{{ note.id_application }}</td>
+            <td>{{ note.note_type }}</td>
+            <td>{{ note.note_text }}</td>
+            <td>{{ note.created_at }}</td>
+            <td>
+                <a href="/recruiter/application-notes/edit/{{ note.id }}">Edit</a> |
+                <a href="/application-notes/delete/{{ note.id }}" onclick="return confirm('Yakin hapus?')">Hapus</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">Belum ada catatan.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+

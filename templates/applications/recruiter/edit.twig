@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Status Lamaran - Recruiter Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin2.css">
+    <style>
+        .form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .form-group input[readonly] {
+            background-color: #f9fafb;
+            color: #6b7280;
+        }
+        
+        .required {
+            color: #dc2626;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        .file-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            transition: background-color 0.2s;
+        }
+        
+        .file-link:hover {
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="admin-container">
+    <div class="admin-header">
+        <div class="header-left">
+            <h1><i class="fas fa-edit"></i> Edit Status Lamaran</h1>
+            <p>Ubah status lamaran pelamar</p>
+        </div>
+        <div class="header-right">
+            <a href="/recruiter/applications" class="logout-btn"><i class="fas fa-arrow-left"></i> Kembali ke Daftar</a>
+        </div>
+    </div>
+    <div class="admin-layout">
+        <div class="nav-card">
+                <div class="nav-header">
+                    <h2><i class="fas fa-user-tie"></i> Recruiter Panel</h2>
+                    <p>Kelola informasi lowongan dan pelamar</p>
+                </div>
+                <div class="nav-content">
+                    <div class="nav-section">
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/dashboard/recruiter" class="nav-link">
+                                    <i class="fas fa-home"></i> Dashboard
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <div class="nav-section-title">Perusahaan</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/recruiter/profile/edit" class="nav-link">
+                                    <i class="fas fa-user-edit"></i> Edit Profil
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <div class="nav-section-title">Lowongan</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/recruiter/jobs" class="nav-link">
+                                    <i class="fas fa-briefcase"></i> Kelola Lowongan
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <div class="nav-section-title">Pelamar</div>
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/recruiter/applications" class="nav-link active">
+                                    <i class="fas fa-file-alt"></i> Lamaran Masuk
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        <div class="content-card">
+            <div class="content-body">
+                <div class="form-section">
+                    <form action="/recruiter/applications/update/{{ application.id }}" method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="applicant_name">Nama Pelamar</label>
+                                <input type="text" id="applicant_name" value="{{ application.user_name }}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="job_title">Posisi</label>
+                                <input type="text" id="job_title" value="{{ application.job_title }}" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="application_date">Tanggal Melamar</label>
+                                <input type="text" id="application_date" value="{{ application.application_date|date('d/m/Y H:i') }}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status <span class="required">*</span></label>
+                                <select id="status" name="status" required>
+                                    {% for key, value in statuses %}
+                                        <option value="{{ key }}" {% if key == application.status %}selected{% endif %}>{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        {% if application.cover_letter %}
+                        <div class="form-group">
+                            <label>Surat Lamaran</label>
+                            <div>
+                                <a href="/uploads/cover_letters/{{ application.cover_letter }}" target="_blank" class="file-link">
+                                    <i class="fas fa-file-pdf"></i> Lihat Surat Lamaran
+                                </a>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Simpan Perubahan
+                            </button>
+                            <a href="/recruiter/applications" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Batal
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

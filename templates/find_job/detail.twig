@@ -1,0 +1,261 @@
+{% extends "layout/base.twig" %}
+
+{% block title %}{{ job.title }} - {{ job.company_name }} - Jobstack{% endblock %}
+
+{% block content %}
+<div class="job-detail-page" style="margin-bottom: 80px;">
+    <div class="container">
+
+        <div class="job-detail-content">
+            <!-- Main Content -->
+            <div class="job-main-content">
+                <!-- Job Header -->
+                <div class="job-detail-header">
+                    <div class="company-logo-section">
+                        <div class="company-logo-wrapper">
+                            <img src="{{ job.company_logo_url }}" alt="{{ job.company_name }}" class="company-logo-large">
+                        </div>
+                    </div>
+                    
+                    <div class="job-header-info">
+                        <div class="job-title-section">
+                            <h1 class="job-title">{{ job.title }}</h1>
+                            <div class="job-badges">
+                                {% if job.featured %}
+                                    <span class="badge badge-featured">Featured</span>
+                                {% endif %}
+                                <span class="badge badge-job-type">{{ job.job_type }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="company-info">
+                            <h2 class="company-name">{{ job.company_name }}</h2>
+                            <div class="company-details">
+                                <span class="company-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    {{ job.location_name }}{% if job.province %}, {{ job.province }}{% endif %}
+                                </span>
+                                {% if job.company_website %}
+                                <span class="company-website">
+                                    <i class="fas fa-globe"></i>
+                                    <a href="{{ job.company_website }}" target="_blank">{{ job.company_website }}</a>
+                                </span>
+                                {% endif %}
+                                {% if job.industry_name %}
+                                <span class="company-industry">
+                                    <i class="fas fa-industry"></i>
+                                    {{ job.industry_name }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="job-posted-info">
+                            <span class="job-posted-date">Job posted: {{ job.posted_ago }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="job-actions">
+                        <a href="/login?role=seeker" class="btn btn-primary apply-btn">
+                            Apply Now
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Job Description -->
+                <div class="job-section">
+                    <h3>Job Description</h3>
+                    <div class="job-description">
+                        {% for paragraph in job.description_paragraphs %}
+                            {% if paragraph|trim %}
+                                <p>{{ paragraph|trim|nl2br }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Requirements -->
+                {% if job.requirements_list|length > 0 %}
+                <div class="job-section">
+                    <h3>Requirements</h3>
+                    <ul class="responsibilities-list">
+                        {% for requirement in job.requirements_list %}
+                            {% if requirement|trim %}
+                                <li>{{ requirement|trim }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <!-- Skills Required -->
+                {% if job.skills|length > 0 %}
+                <div class="job-section">
+                    <h3>Skills Required</h3>
+                    <div class="skills-list">
+                        {% for skill in job.skills %}
+                            <span class="skill-tag">{{ skill.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="job-sidebar">
+                <!-- Job Overview -->
+                <div class="job-overview">
+                    <h5>Job Overview</h5>
+                    
+                    <div class="overview-item">
+                        <div class="overview-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="overview-content">
+                            <h6>Date Posted</h6>
+                            <span>{{ job.posted_date ? job.posted_date|date('d M, Y') : job.create_time|date('d M, Y') }}</span>
+                        </div>
+                    </div>
+
+                    {% if job.deadline %}
+                    <div class="overview-item">
+                        <div class="overview-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="overview-content">
+                            <h6>Expiration</h6>
+                            <span>{{ job.deadline|date('d M, Y') }}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="overview-item">
+                        <div class="overview-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="overview-content">
+                            <h6>Location</h6>
+                            <span>{{ job.location_name }}{% if job.province %}, {{ job.province }}{% endif %}</span>
+                        </div>
+                    </div>
+
+                    <div class="overview-item">
+                        <div class="overview-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="overview-content">
+                            <h6>Job Type</h6>
+                            <span>{{ job.job_type }}</span>
+                        </div>
+                    </div>
+
+                    <div class="overview-item">
+                        <div class="overview-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="overview-content">
+                            <h6>Salary</h6>
+                            <span>{{ job.salary_formatted }}</span>
+                        </div>
+                    </div>
+
+                    <div class="overview-item">
+                        <div class="overview-icon">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <div class="overview-content">
+                            <h6>Category</h6>
+                            <span>{{ job.category_name }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company Info -->
+                <div class="company-info-sidebar">
+                    <div class="company-header">
+                        <div class="company-logo-wrapper">
+                            <img src="{{ job.company_logo_url }}" alt="{{ job.company_name }}" class="company-logo-sidebar">
+                        </div>
+                        <h6>{{ job.company_name }}</h6>
+                        <p>{{ job.industry_name ?: 'Technology Company' }}</p>
+                    </div>
+
+                    <div class="company-details">
+                        {% if job.founded_year %}
+                        <div class="company-detail-item">
+                            <strong>Founded in:</strong>
+                            <span>{{ job.founded_year }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if job.company_type %}
+                        <div class="company-detail-item">
+                            <strong>Organization type:</strong>
+                            <span>{{ job.company_type }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if job.company_size %}
+                        <div class="company-detail-item">
+                            <strong>Company Size:</strong>
+                            <span>{{ job.company_size }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if job.company_website %}
+                        <div class="company-detail-item">
+                            <strong>Website:</strong>
+                            <span>
+                                <a href="{{ job.company_website }}" target="_blank">{{ job.company_website }}</a>
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Jobs Section -->
+        {% if relatedJobs|length > 0 %}
+            <div class="related-jobs-section">
+                <div class="section-header">
+                    <h3>Related Jobs</h3>
+                </div>
+
+                <div class="related-jobs-grid">
+                    {% for relatedJob in relatedJobs %}
+                        <div class="related-job-card">
+                            <div class="related-job-header">
+                                <div class="company-logo-wrapper">
+                                    <img src="{{ relatedJob.company_logo_url }}" alt="{{ relatedJob.company_name }}" class="company-logo-small">
+                                </div>
+                            </div>
+                            
+                            <div class="related-job-content">
+                                <h6 class="job-title">
+                                    <a href="/find-job/{{ relatedJob.id }}">{{ relatedJob.title }}</a>
+                                </h6>
+                                <p class="company-name">{{ relatedJob.company_name }}</p>
+                                <div class="job-meta">
+                                    <span class="job-type">{{ relatedJob.job_type }}</span>
+                                    <span class="job-salary">{{ relatedJob.salary_formatted }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Apply button functionality handled by href
+    console.log('Job detail page loaded');
+});
+</script>
+{% endblock %}

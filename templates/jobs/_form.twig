@@ -1,0 +1,66 @@
+<div class="mb-3">
+    <label for="title" class="form-label">Judul</label>
+    <input type="text" class="form-control" name="title" id="title" required value="{{ job.title ?? '' }}">
+</div>
+
+<div class="mb-3">
+    <label for="id_company" class="form-label">Perusahaan</label>
+    <select name="id_company" id="id_company" class="form-select" required>
+        {% for company in companies %}
+            <option value="{{ company.id }}" {% if job.id_company == company.id %}selected{% endif %}>{{ company.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="id_category" class="form-label">Kategori</label>
+    <select name="id_category" id="id_category" class="form-select" required>
+        {% for category in categories %}
+            <option value="{{ category.id }}" {% if job.id_category == category.id %}selected{% endif %}>{{ category.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="id_location" class="form-label">Lokasi</label>
+    <select name="id_location" id="id_location" class="form-select" required>
+        {% for location in locations %}
+            <option value="{{ location.id }}" {% if job.id_location == location.id %}selected{% endif %}>{{ location.city }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="description" class="form-label">Deskripsi</label>
+    <textarea name="description" id="description" class="form-control" rows="4">{{ job.description ?? '' }}</textarea>
+</div>
+
+<div class="mb-3">
+    <label for="requirements" class="form-label">Kualifikasi</label>
+    <textarea name="requirements" id="requirements" class="form-control" rows="4">{{ job.requirements ?? '' }}</textarea>
+</div>
+
+<div class="mb-3">
+    <label for="job_type" class="form-label">Jenis Pekerjaan</label>
+    <select name="job_type" id="job_type" class="form-select" required>
+        <option value="Full-time" {% if job.job_type == 'Full-time' %}selected{% endif %}>Full-time</option>
+        <option value="Part-time" {% if job.job_type == 'Part-time' %}selected{% endif %}>Part-time</option>
+        <option value="Internship" {% if job.job_type == 'Internship' %}selected{% endif %}>Internship</option>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Gaji</label>
+    <div class="input-group">
+        <input type="number" class="form-control" name="salary_min" placeholder="Min" value="{{ job.salary_min ?? '' }}">
+        <input type="number" class="form-control" name="salary_max" placeholder="Max" value="{{ job.salary_max ?? '' }}">
+    </div>
+</div>
+
+<div class="mb-3">
+    <label for="status" class="form-label">Status</label>
+    <select name="status" id="status" class="form-select">
+        <option value="Open" {% if job.status == 'Open' %}selected{% endif %}>Open</option>
+        <option value="Closed" {% if job.status == 'Closed' %}selected{% endif %}>Closed</option>
+    </select>
+</div>

@@ -1,0 +1,237 @@
+{% extends "layout/base.twig" %}
+
+{% block title %}Saved Jobs - Jobstack{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="/css/seeker.css">
+{% endblock %}
+
+{% block content %}
+<div class="seeker-dashboard">
+    <div class="dashboard-container">
+        <!-- Page Header -->
+        <div class="dashboard-header fade-in">
+            <div class="dashboard-welcome">
+                <div class="welcome-content">
+                    <h1>Saved Jobs</h1>
+                    <p>Keep track of interesting opportunities for later review</p>
+                </div>
+                <a href="/find-job" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                    Find More Jobs
+                </a>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Sidebar Navigation -->
+            <div class="dashboard-sidebar slide-up">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-bookmark"></i>
+                        Quick Actions
+                    </h3>
+                    <ul class="sidebar-menu">
+                        <li>
+                            <a href="/seeker/saved-jobs" class="active">
+                                <i class="fas fa-bookmark"></i>
+                                All Saved Jobs
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/find-job">
+                                <i class="fas fa-search"></i>
+                                Browse Jobs
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/seeker/applications">
+                                <i class="fas fa-file-alt"></i>
+                                My Applications
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/seeker/job-alerts">
+                                <i class="fas fa-bell"></i>
+                                Job Alerts
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-info-circle"></i>
+                        Tips
+                    </h3>
+                    <div style="background: var(--light-blue); border-radius: 8px; padding: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
+                        <p style="margin: 0 0 0.5rem 0; font-weight: 600; color: var(--primary-blue);">Pro Tip:</p>
+                        <p style="margin: 0;">Review your saved jobs regularly and apply to the ones that match your current career goals.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="dashboard-main slide-up">
+                {% if savedJobs|length > 0 %}
+                    <!-- Saved Jobs List -->
+                    <div class="saved-jobs-list">
+                        {% for savedJob in savedJobs %}
+                            <div class="job-card" style="background: white; border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; transition: all 0.3s ease;">
+                                <div class="job-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                    <div class="job-info" style="flex: 1;">
+                                        <div class="company-logo" style="width: 50px; height: 50px; background: var(--light-blue); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                            {% if savedJob.company_logo %}
+                                                <img src="/uploads/logos/{{ savedJob.company_logo }}" alt="{{ savedJob.company_name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                                            {% else %}
+                                                <i class="fas fa-building" style="color: var(--primary-blue); font-size: 1.2rem;"></i>
+                                            {% endif %}
+                                        </div>
+                                        
+                                        <h3 style="margin: 0 0 0.5rem 0; color: var(--text-primary); font-size: 1.2rem;">
+                                            <a href="/find-job/{{ savedJob.id_job }}" style="color: inherit; text-decoration: none;">
+                                                {{ savedJob.job_title }}
+                                            </a>
+                                        </h3>
+                                        <h4 style="margin: 0 0 0.5rem 0; color: var(--primary-blue); font-size: 1rem;">{{ savedJob.company_name }}</h4>
+                                        
+                                        <div class="job-meta" style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+                                            <span><i class="fas fa-map-marker-alt"></i> {{ savedJob.location }}</span>
+                                            <span style="margin-left: 1rem;"><i class="fas fa-briefcase"></i> {{ savedJob.job_type }}</span>
+                                            {% if savedJob.salary_min and savedJob.salary_max %}
+                                                <span style="margin-left: 1rem;"><i class="fas fa-money-bill-wave"></i> Rp {{ (savedJob.salary_min/1000000)|number_format(0) }}M - {{ (savedJob.salary_max/1000000)|number_format(0) }}M</span>
+                                            {% endif %}
+                                        </div>
+                                        
+                                        <div class="job-description" style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
+                                            {{ savedJob.job_description|length > 200 ? savedJob.job_description|slice(0, 200) ~ '...' : savedJob.job_description }}
+                                        </div>
+                                        
+                                        <div class="job-tags" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                            <span class="badge badge-new">{{ savedJob.category_name }}</span>
+                                            {% if savedJob.featured %}
+                                                <span class="badge badge-accepted">Featured</span>
+                                            {% endif %}
+                                            {% if savedJob.deadline %}
+                                                {% set daysLeft = (savedJob.deadline|date('U') - 'now'|date('U')) / 86400 %}
+                                                {% if daysLeft > 0 %}
+                                                    <span class="badge badge-sent">{{ daysLeft|round }} days left</span>
+                                                {% else %}
+                                                    <span class="badge badge-rejected">Expired</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="job-actions" style="display: flex; flex-direction: column; gap: 0.5rem; margin-left: 1rem;">
+                                        <button class="btn btn-sm btn-danger" onclick="unsaveJob({{ savedJob.id_job }})" title="Remove from saved">
+                                            <i class="fas fa-bookmark"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="job-footer" style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                                    <div class="job-saved-date" style="color: var(--text-light); font-size: 0.8rem;">
+                                        <i class="fas fa-clock"></i>
+                                        Saved on {{ savedJob.saved_at|date('M d, Y') }}
+                                    </div>
+                                    
+                                    <div class="job-actions-main" style="display: flex; gap: 0.5rem;">
+                                        <a href="/find-job/{{ savedJob.id_job }}" class="btn btn-sm btn-secondary">
+                                            <i class="fas fa-eye"></i>
+                                            View Details
+                                        </a>
+                                        
+                                        {% if savedJob.deadline and (savedJob.deadline|date('U') > 'now'|date('U')) %}
+                                            <a href="/find-job/{{ savedJob.id_job }}#apply" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-paper-plane"></i>
+                                                Apply Now
+                                            </a>
+                                        {% else %}
+                                            <span class="btn btn-sm btn-secondary" style="opacity: 0.5; cursor: not-allowed;">
+                                                <i class="fas fa-times"></i>
+                                                Expired
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-bookmark"></i>
+                        </div>
+                        <h4 class="empty-title">No Saved Jobs</h4>
+                        <p class="empty-description">You haven't saved any jobs yet. Start browsing and save interesting opportunities for later review.</p>
+                        <a href="/find-job" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                            Browse Jobs
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/js/seeker.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to job cards
+            const jobCards = document.querySelectorAll('.job-card');
+            jobCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 8px 25px rgba(10, 101, 204, 0.1)';
+                    this.style.borderColor = 'var(--primary-blue)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                    this.style.borderColor = 'var(--border-color)';
+                });
+            });
+
+            // Show success/error messages
+            {% if success %}
+                SeekerDashboard.showNotification('{{ success }}', 'success');
+            {% endif %}
+
+            {% if error %}
+                SeekerDashboard.showNotification('{{ error }}', 'error');
+            {% endif %}
+        });
+
+        function unsaveJob(jobId) {
+            if (confirm('Are you sure you want to remove this job from your saved list?')) {
+                fetch(`/seeker/saved-jobs/${jobId}/remove`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        SeekerDashboard.showNotification('Job removed from saved list', 'success');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    } else {
+                        SeekerDashboard.showNotification(data.message || 'Failed to remove job', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    SeekerDashboard.showNotification('An error occurred while removing the job', 'error');
+                });
+            }
+        }
+    </script>
+{% endblock %}

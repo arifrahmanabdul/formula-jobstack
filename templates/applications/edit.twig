@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Lamaran - Admin Panel</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/admin2.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="header-left">
+                <h1><i class="fas fa-edit"></i> Edit Lamaran</h1>
+                <p>Perbarui status lamaran ID #{{ application.id }}</p>
+            </div>
+            <div class="header-right">
+                <a href="/{{ session.user.role }}/applications" class="logout-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Kembali ke Daftar Lamaran</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Layout -->
+        <div class="admin-layout">
+            <!-- Sidebar -->
+            {% include "layout/sidebar.twig" %}
+
+            <!-- Main Content -->
+            <div class="content-card">
+                <div class="content-header">
+                    <h2 class="content-title">
+                        <i class="fas fa-file-alt"></i>
+                        Form Edit Lamaran
+                    </h2>
+                </div>
+                <div class="content-body">
+                    <form method="POST" action="/{{ session.user.role }}/applications/update/{{ application.id }}">
+                        <div class="form-group">
+                            <label>Lowongan</label>
+                            <input type="text" class="form-control" value="{{ jobs | filter(job => job.id == application.id_job) | first.title }}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Pelamar</label>
+                            <input type="text" class="form-control" value="{{ users | filter(u => u.id == application.id_user) | first.full_name }}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Status <span class="required">*</span></label>
+                            <select name="status" class="form-control" required>
+                                {% for key, label in statuses %}
+                                    <option value="{{ key }}" {% if key == application.status %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Cover Letter</label><br>
+                            {% if application.cover_letter %}
+                                <a href="/uploads/cover_letters/{{ application.cover_letter }}" target="_blank" class="btn btn-outline-secondary">
+                                    Lihat Cover Letter (PDF)
+                                </a>
+                            {% else %}
+                                <p><em>Tidak ada file cover letter.</em></p>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i>
+                                Update Status
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr>
+                    <h4>Identitas Pelamar</h4>
+
+                    <div class="mb-4">
+                        <h5>Keahlian (Skills)</h5>
+                        <ul>
+                            {% for skill in skills %}
+                                <li>
+                                    {{ skill.name }}
+                                    {% if skill.pdf %} — <a href="/uploads/certificates/{{ skill.pdf }}" target="_blank" class="btn btn-sm btn-outline-primary">Lihat Sertifikat</a>{% endif %}
+                                </li>
+                            {% else %}
+                                <li><em>Tidak ada data skill.</em></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>Pengalaman Kerja</h5>
+                        <ul>
+                            {% for exp in experiences %}
+                                <li>
+                                    <strong>{{ exp.job_title }}</strong> di {{ exp.company_name }} ({{ exp.start_date }} - {{ exp.end_date }})<br>
+                                    {{ exp.description }}
+                                    {% if exp.attachment_url %}
+                                        <br><a href="/uploads/experiences/{{ exp.attachment_url }}" target="_blank">Lihat Sertifikat</a>
+                                    {% endif %}
+                                </li>
+                            {% else %}
+                                <li><em>Tidak ada data pengalaman.</em></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>Riwayat Pendidikan</h5>
+                        <ul>
+                            {% for edu in educations %}
+                                <li>
+                                    <strong>{{ edu.degree }}</strong> - {{ edu.institution_name }} ({{ edu.field_of_study }} - {{ edu.graduation_year }})
+                                    {% if edu.certificate_url %}
+                                        <br><a href="/uploads/educations/{{ edu.certificate_url }}" target="_blank">Lihat Ijazah</a>
+                                    {% endif %}
+                                </li>
+                            {% else %}
+                                <li><em>Tidak ada data pendidikan.</em></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="/js/admin2.js"></script>
+</body>
+</html>

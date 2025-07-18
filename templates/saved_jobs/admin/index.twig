@@ -1,0 +1,28 @@
+{# {% extends "layouts/main.twig" %}
+{% block content %} #}
+<h2>Daftar Pekerjaan yang Disimpan</h2>
+<a href="/admin/saved-jobs/create" class="btn btn-primary mb-3">+ Tambah Data Simpanan</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Pelamar</th>
+            <th>Pekerjaan</th>
+            <th>Tanggal Simpan</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for job in savedJobs %}
+        <tr>
+            <td>{{ job.full_name }}</td>
+            <td>{{ job.job_title }}</td>
+            <td>{{ job.saved_at }}</td>
+            <td>
+                <a href="/admin/saved-jobs/delete/{{ job.id_user }}/{{ job.id_job }}" class="btn btn-sm btn-danger" onclick="return confirm('Hapus simpanan ini?')">Hapus</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{# {% endblock %} #}

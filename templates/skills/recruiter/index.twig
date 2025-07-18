@@ -1,0 +1,28 @@
+{# {% extends "layouts/main.twig" %}
+{% block content %} #}
+
+<h2>Daftar Skill</h2>
+
+<a href="{{ user.role }}/skills/create" class="btn btn-primary mb-3">+ Tambah Skill</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nama Skill</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for skill in skills %}
+        <tr>
+            <td>{{ skill.name }}</td>
+            <td>
+                <a href="/{{ user.role }}/skills/edit/{{ skill.id }}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="/{{ user.role }}/skills/delete/{{ skill.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Hapus skill ini?')">Hapus</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{# {% endblock %} #}
